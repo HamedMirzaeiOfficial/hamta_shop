@@ -1,0 +1,86 @@
+{% extends '../base.html' %}
+{% load static %}
+{% load blog_tags %}
+
+{% block title %}My Blog{% endblock %}
+
+{% block content %}
+<main class="page-content">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-3 col-md-4 sticky-sidebar filter-options-sidebar">
+                <div class="d-md-none">
+                    <div class="header-filter-options">
+                        <span>جستجوی پیشرفته <i class="fad fa-sliders-h"></i></span>
+                        <button class="btn-close-filter-sidebar"><i class="fal fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="sidebar-widget">
+                    <div class="widget widget-tags shadow-around">
+                        <div class="widget-title">داغ ترینها</div>
+                        <div class="widget-content">
+                            {% for tag in tags %}
+                                <p><a href="{% url 'blog:post_list_by_tag' tag.slug %}">#{{ tag.name }}</a></p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-8">
+                <div class="d-md-none">
+                    <button class="btn-filter-sidebar">
+                        جستجوی پیشرفته <i class="fad fa-sliders-h"></i>
+                    </button>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <!-- breadcrumb -->
+                        <div class="breadcrumb mb-2 pt-2">
+                            <nav>
+                                <a href="{% url 'shop:home' %}">فروشگاه اینترنتی</a>
+                                <a href="{% url 'blog:post_list' %}">مقالات</a>
+                                {% if tag %}
+                                    <a href="#">{{ tag.name }}</a>
+                                {% endif %}
+                            </nav>
+                        </div>
+                        <!-- end breadcrumb -->
+                    </div>
+                </div>
+                <div class="listing-items blog-listing-items">
+                    <div class="row">
+                        {% for post in posts %}
+                            <div class="col-lg-4 col-sm-6 mb-3">
+                                <div class="blog-card">
+                                    <div class="blog-card-thumbnail">
+                                        <a href="{{ post.get_absolute_url }}">
+                                            <img src="{{ post.image.url }}" alt="سامسونگ از گلکسی بادز پرو رونمایی کرد">
+                                        </a>
+                                    </div>
+                                    <div class="blog-card-title">
+                                        <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+                                    </div>
+                                    <div class="blog-card-excerpt">
+                                        <p>{{ post.body|truncatewords:10 }}</p>
+                                    </div>
+                                    <div class="blog-card-footer">
+                                        <div class="author">
+                                            <img src="{% static './images/avatar/avatar.png' %}" alt="{{ post.author.get_full_name }}">
+                                            <a href="#">{{ post.author.get_full_name }}</a>
+                                        </div>
+                                        <div class="date">
+                                            <i class="fad fa-clock"></i>
+                                            {{ post.jpublish }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% include '../pagination.html' with page=posts %}
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

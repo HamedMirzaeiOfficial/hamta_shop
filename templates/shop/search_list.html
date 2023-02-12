@@ -1,0 +1,62 @@
+{% extends '../base.html' %}
+{% load humanize %}
+{% block title %}نتایج جستجو برای  "{{ search }}"{% endblock %}
+
+{% block content %}
+
+
+<div class="row align-items-center mb-4"></div>
+<div class="row align-items-center mb-4"></div>
+<div class="row align-items-center mb-4"></div>
+<section class="product-carousel in-box">
+    <div class="section-title">
+        <i class="fad fa-pen-nib"></i>
+            نتایج جستجو برای  "{{ search }}"
+    </div>
+    <div class="swiper-container slider-lg">
+        <div class="swiper-wrapper">
+            {% for product in object_list %}
+                <div class="swiper-slide">
+                    <div class="product-card">
+                        <div class="product-card-top">
+                            {% if product.images %}
+                                <a href="{{ product.get_absolute_url }}" class="product-image">
+                                    <img src="{{ product.images.first.image.url }}" alt="product image">
+                                </a>
+                            {% else %}
+                                <a href="{{ product.get_absolute_url }}" class="product-image">
+                                    <img src="./assets/images/products/01.jpg" alt="product image">
+                                </a>
+                            {% endif %}
+                        </div>
+                        <div class="product-card-middle">
+                            <div class="ratings-container">
+                                <div class="ratings">
+                                    <div class="ratings-val" style="width: 65%;"></div>
+                                </div>
+                            </div>
+                            <h6 class="product-name">
+                                <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>
+                            </h6>
+                            <del class="product-price product-price-clone text-danger">{{ product.price|intcomma }} تومان</del>
+                        </div>
+                        <div class="product-card-bottom">
+                            <div class="product-price">
+                                {{ product.price|intcomma }} تومان
+                            </div>
+                            <a href="{% url 'cart:item_add' product.id %}" class="">
+                                <i class="fad fa-cart-plus"></i>
+                                افزودن به سبد خرید
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
+        </div>
+        <!-- Add Arrows -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+</section>
+{% endblock %}

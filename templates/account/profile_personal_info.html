@@ -1,0 +1,96 @@
+{% extends './base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}پروفایل شما - اطلاعات حساب{% endblock %}
+
+{% block main %}
+    <div class="col-lg-9 col-md-9">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="section-title mb-2">
+                    اطلاعات شخصی
+                </div>
+                <section class="shadow-around p-3">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-lg-6 mb-5">
+                                <div class="text-sm text-muted mb-3">نام:</div>
+                                <div class="text-dark font-weight-bold">
+                                    <div class="form-element-row mb-0">
+                                        {{ form.first_name|add_class:"input-element" }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-5">
+                                <div class="text-sm text-muted mb-3">نام خانوادگی:</div>
+                                <div class="text-dark font-weight-bold">
+                                    <div class="form-element-row mb-0">
+                                        {{ form.last_name|add_class:"input-element" }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-5">
+                                <div class="text-sm text-muted mb-3">پست الکترونیک:</div>
+                                <div class="text-dark font-weight-bold">
+                                    <div class="form-element-row mb-0">
+                                        {{ form.email|add_class:"input-element" }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-5">
+                                <div class="text-sm text-muted mb-3">شماره تلفن همراه:</div>
+                                <div class="text-dark font-weight-bold">
+                                    <div class="form-element-row mb-0">
+                                        {{ form.phone_number|add_class:"input-element" }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-5">
+                                <div class="text-sm text-muted mb-3">کد ملی:</div>
+                                <div class="text-dark font-weight-bold">
+                                    <div class="form-element-row mb-0">
+                                        {{ form.ssn|add_class:"input-element" }}
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-lg-6 mb-5">
+                                <div class="text-sm text-muted mb-3">دریافت خبرنامه:</div>
+                                <div class="text-dark font-weight-bold">
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="customRadioInline1"
+                                            name="customRadioInline1" class="custom-control-input"
+                                            checked>
+                                        <label class="custom-control-label"
+                                            for="customRadioInline1">خیر</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="customRadioInline2"
+                                            name="customRadioInline1" class="custom-control-input">
+                                        <label class="custom-control-label"
+                                            for="customRadioInline2">بله</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-5">
+                                <div class="text-sm text-muted mb-3">روش بازگشت وجه:</div>
+                                <div class="text-dark font-weight-bold">
+                                    -
+                                </div>
+                            </div> -->
+                            <div class="col-12">
+                                <div class="form-element-row text-left">
+                                    <button class="btn-element btn-success-element">
+                                        <i class="fad fa-user-edit"></i>
+                                        ذخیره تغییرات
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+{% endblock %}

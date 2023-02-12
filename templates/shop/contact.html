@@ -1,0 +1,36 @@
+{% extends '../base.html' %}
+
+{%  block title %}تماس با ما{%  endblock %}
+
+{% block content %}
+<main class="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title mb-2">
+                    تماس با همتا
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="shadow-around p-3 mb-5">
+                    <div class="row p-2 m-2">
+                        <div class="col-12 mb-5">
+                            <p class="text-muted text-sm">برای پیگیری یا سوال درباره سفارش و ارسال پیام بهتر است
+                                از فرم زیر استفاده کنید.</p>
+                        </div>
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form }}
+                            <div class="col-12 mt-4">
+                                <div class="form-element-row text-center">
+                                    <input type="submit" value="ثبت و ارسال" class="btn-element btn-info-element">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

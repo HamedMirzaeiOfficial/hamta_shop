@@ -1,0 +1,130 @@
+{% extends '../base.html' %}
+{% load static %}
+{% load blog_tags %}
+{% load crispy_forms_tags %}
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<main class="page-content">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-3 col-md-4 sticky-sidebar filter-options-sidebar">
+                <div class="d-md-none">
+                    <div class="header-filter-options">
+                        <span>جستجوی پیشرفته <i class="fad fa-sliders-h"></i></span>
+                        <button class="btn-close-filter-sidebar"><i class="fal fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="sidebar-widget">
+                    <div class="widget widget-tags shadow-around">
+                        <div class="widget-title">داغ ترینها</div>
+                        <div class="widget-content">
+                            {% for tag in all_tags %}
+                                <p><a href="{% url 'blog:post_list_by_tag' tag.slug %}">#{{ tag.name }}</a></p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-8 order-1 order-md-2">
+                <div class="row">
+                    <div class="col-12 mb-3">
+                        <div class="shadow-around">
+                            <div class="px-3">
+                                <!-- breadcrumb -->
+                                <div class="breadcrumb py-2">
+                                    <nav>
+                                        <a href="{% url 'shop:home' %}">فروشگاه اینترنتی</a>
+                                        <a href="{% url 'blog:post_list' %}">مقالات</a>
+                                        <a href="#">{{ post.title }}</a>
+                                    </nav>
+                                </div>
+                                <!-- end breadcrumb -->
+                                <div class="blog-card single-blog">
+                                    <div class="blog-card-title mb-3">
+                                        <h2 class="text-right"><a href="#">{{ post.title }}</a></h2>
+                                    </div>
+                                    <div class="blog-card-footer mb-3">
+                                        <div class="author">
+                                            <img src="{% static './images/avatar/avatar.png' %}" alt="{{ post.author.get_full_name }}">
+                                            <a href="#">{{ post.author.get_full_name }}</a>
+                                        </div>
+                                        <div class="date">
+                                            <i class="fad fa-clock"></i>
+                                            {{ post.jpublish }}
+                                        </div>
+                                    </div>
+                                    <div class="blog-card-thumbnail">
+                                        <a href="#">
+                                            <img src="{{ post.image.url }}" alt="{{ post.title }}">
+                                        </a>
+                                    </div>
+                                    <div class="blog-card-body">
+                                        <p>
+                                            {{ post.body }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="tags mb-5">
+                                    {% for tag in tags %}
+                                      <a href="{% url 'blog:post_list_by_tag' tag.slug % }">#{{ tag.name }}</a>
+                                    {% endfor %}
+                                </div>
+                                <hr>
+                                <!-- product-review -->
+                                <div class="product-review-form my-5">
+                                    <div class="section-title font-weight-bold mb-1 mt-4 mb-3">
+                                        نظر شما
+                                    </div>
+                                    <form action="{% url "blog:post_comment" post.id %}" method="post">
+                                        {% csrf_token %}
+                                        {{ form|crispy }}
+                                           <div class="col-12">
+                                                <div class="form-group">
+                                                    <input type="submit" value="ارسال نظر" class="btn btn-primary px-3">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="section-title mb-1 mt-4">
+                                        نظرات کاربران ({{ comment_count }})
+                                    </div>
+                                    <hr>
+                                </div>
+                                <div class="product-review mb-4">
+                                    {% for comment in comments %}
+                                        <div class="blockquote comment mb-4">
+                                            <div class="blockquote-content">
+                                                <div class="d-sm-flex align-items-center mb-2">
+                                                    <h6 class="font-weight-bold mb-0">{{ comment.title }}</h6><span
+                                                        class="d-none d-sm-inline mx-3 text-muted opacity-50">:</span>
+                                                </div>
+                                                <p>{{ comment.body }}</p>
+                                                <footer class="testimonial-footer d-flex align-items-center">
+                                                    <div class="testimonial-avatar">
+                                                        <img src="{% static './images/avatar/avatar.png' %}" alt="Review Author Avatar">
+                                                    </div>
+                                                    <div class="pr-2 flex-grow-1">
+                                                        <div class="blockquote-footer">
+                                                            <span class="d-block font-weight-bold text-dark">{{ comment.user.get_full_name }}</span>
+                                                            <div
+                                                                class="d-flex justify-content-between align-items-center">
+                                                                <cite class="text-sm">{{ comment.jcreated }}</cite>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </footer>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <!-- end product-review -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

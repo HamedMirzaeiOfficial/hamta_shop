@@ -1,0 +1,34 @@
+{% extends './base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}ارسال کد تایید{% endblock %}
+
+{% block content %}
+    <main class="page-content">
+        <div class="container">
+            <div class="auth-wrapper">
+                <div class="auth-form shadow-around">
+                    <div class="site-logo">
+                        <a href="#">
+                            <img src="{% static './images/logo.png' %}" alt="logo">
+                        </a>
+                    </div>
+                    <div class="auth-form-title">
+                        ثبت نام در همتا
+                    </div>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                       
+                        <div class="form-element-row text-left">
+                            <button class="btn-element btn-success-element">
+                                <i class="fad fa-user-edit"></i>
+                               ارسال کد
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

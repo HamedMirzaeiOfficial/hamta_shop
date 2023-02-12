@@ -1,0 +1,20 @@
+{% extends '../base.html' %}
+{% block content %}
+<main class="page-content">
+    <div class="container">
+        <div class="row mb-4 justify-content-center">
+            <div class="col-xl-9 col-lg-9 col-md-9">
+                <div class="shadow-around p-5">
+                    <div class="d-flex justify-content-center p-5">
+                        <form method='post'>
+                            {{form.as_p}}
+                            {% csrf_token %}
+                            <input type='submit' class="btn btn-success text-white m-3" value="رفتن به درگاه پرداخت زرین پال">   
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

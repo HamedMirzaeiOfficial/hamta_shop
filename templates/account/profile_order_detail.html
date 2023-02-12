@@ -1,0 +1,100 @@
+{% extends './base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}پروفایل شما- جزئیات سفارش{% endblock %}
+
+
+{% block main %}
+    <div class="col-lg-9 col-md-8">
+        <div class="section-title mb-2">
+            <span class="ml-2">جزئیات سفارش</span>
+            <span class="text-muted ml-2">|</span>
+            <span class="font-en ml-2">{{ order.code }}</span>
+            <span class="text-muted ml-2">|</span>
+            <span class="text-sm text-secondary">{{ order.jcreated }}</span>
+        </div>
+        <div class="row mb-4">
+            <div class="col-12">
+                <section class="shadow-around p-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="checkout-section shadow-around p-2">
+                                <div class="checkout-section-content">
+                                    <div class="cart-items">
+                                        <div class="mb-2">
+                                            <span class="text-muted">تحویل گیرنده:</span>
+                                            <span class="font-weight-bold">{{ order.address.user.get_full_name }}</span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span class="text-muted">شماره تماس :</span>
+                                            <span class="font-weight-bold">{{ order.address.user.phone_number }}</span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span class="text-muted d-block">ارسال به:</span>
+                                            <span class="font-weight-bold">{{ order.address.title }}</span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span class="text-muted">وضعیت :</span>
+                                            <span class="font-weight-bold">{{ order.show_shipping_status }}</span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span class="text-muted">مبلغ کل این مرسوله :</span>
+                                            <span class="font-weight-bold">
+                                                {{ order.get_total_cost_after_discount|intcomma }}
+                                                <span class="text-sm text-secondary">تومان</span>
+                                            </span>
+                                        </div>
+                                        <hr>
+                                        {% for item in order.items.all %}
+                                            <div class="cart-item py-4 px-3">
+                                                <div class="item-thumbnail">
+                                                    <a href="{{ item.product.get_absolute_url }}">
+                                                        <img src="{{ item.product.images.first.image.url }}"
+                                                            alt="item">
+                                                    </a>
+                                                </div>
+                                                <div class="item-info flex-grow-1">
+                                                    <div class="item-title">
+                                                        <h2>
+                                                            <a href="{{ item.product.get_absolute_url }}">{{ item.product }}</a>
+                                                        </h2>
+                                                    </div>
+                                                    <div class="item-detail">
+                                                        <ul>
+                                                            <li>
+                                                                <i
+                                                                    class="far fa-shield-check text-muted"></i>
+                                                                <span>گارانتی {{ item.product.guarantee }} ماهه</span>
+                                                            </li>
+                                                        </ul>
+                                                        <div class="item-quantity--item-price">
+                                                            <div class="item-price">
+                                                                <span class="text-muted"> قیمت :</span>
+                                                                {{ item.price_after_discount|intcomma }}<span class="text-sm mr-1">تومان</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="section-title mt-3 mb-2">توضیحات مربوط به رنگ سفارشات:‌</span>
+                    <div class="shadow-around p-4" style="height: 200px;">
+                        <p>{{ order.description }}</p>
+                    </div>
+
+                    {% if not order.is_paid %}
+                        <div class="px-3 py-4">
+                            <a href="{% url 'payment:process' order.id %}" class="d-flex align-items-center justify-content-center px-4 py-2 btn btn-danger">پرداخت
+                                مجدد<i class="fad fa-redo mr-3"></i></a>
+                        </div>
+                    {% endif %}
+                </section>
+            </div>
+        </div>
+    </div>
+{% endblock %}

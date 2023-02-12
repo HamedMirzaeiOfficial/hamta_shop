@@ -1,0 +1,91 @@
+{% extends '../base.html' %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+{% block title %}نحوه ی ارسال و پرداخت{% endblock %}
+
+{% block content %}
+    <main class="page-content">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-xl-9 col-lg-8 col-md-8 mb-md-0 mb-3">
+                    <div class="checkout-section shadow-around">
+                        <div class="checkout-step">
+                            <ul>
+                                <li class="active">
+                                    <a href="#"><span>سبد خرید</span></a>
+                                </li>
+                                <li>
+                                    <span>نحوه ارسال و پرداخت</span>
+                                </li>
+                                <li>
+                                    <span>اتمام خرید و ارسال</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="checkout-section-content">
+                            <div class="checkout-section-title">آدرس تحویل سفارش</div>
+                            <div class="row mx-0">
+                                {% if address %}
+                                    <div class="col-xl-3 col-lg-4 col-sm-6 mb-3">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="customRadio1" name="customRadio"
+                                                class="custom-control-input">
+                                            <label class="custom-control-label address-select" for="customRadio1">
+                                                <span class="head-address-select">به این آدرس ارسال شود</span>
+                                                <span>{{ address.title }}</span>
+                                                <span>
+                                                    <i class="fa fa-user"></i>
+                                                    {{ address.user.get_full_name }}
+                                                </span>
+                                                <a href="{% url 'account:profile_address_update' %}" class="link--with-border-bottom edit-address-btn">
+                                                    ویرایش
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            </label>
+                                        </div>
+                                    </div>
+                                {% else %} 
+                                    <div class="col-xl-3 col-lg-4 col-sm-6 mb-3">
+                                        <div class="custom-control custom-radio">
+                                            <a href="{% url 'account:profile_address_create' %}">
+                                                <div class="col-xl-3 col-lg-4 col-sm-6 mb-3">
+                                                    <div class="custom-control custom-radio">
+                                                        <button class="add-address" data-toggle="modal"
+                                                            data-target="#addAddressModal">
+                                                            <i class="fa fa-plus"></i>
+                                                            افزودن ادرس 
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="checkout-section-title">شیوه پرداخت</div>
+                                <div class="row m-2">
+                                    <div class="col-md-4">
+                                        <form action="" method="post">
+                                            {% csrf_token %}
+                                            {{ form|crispy }}
+                                            {% if address %}
+                                                <div class="mb-4">
+                                                    <input class="m-4 btn btn-success" type="submit" value="تایید" name="" id="">
+                                                </div>      
+                                            {% else %}
+                                                <div class="d-flex px-3 py-4">
+                                                    <span class="btn btn-danger btn-block py-2">ابتدا آدرس خود را تعیین کنید. سپس میتوانید سفارش را تکمیل کنید.</span>
+                                                </div>  
+                                            {% endif %}
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

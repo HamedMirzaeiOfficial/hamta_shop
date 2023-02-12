@@ -1,0 +1,123 @@
+{% extends './base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}پروفایل شما{% endblock %}
+
+{% block main %}
+    <div class="col-lg-9 col-md-8">
+        <div class="row mb-4">
+            <div class="col-lg-6 mb-lg-0 mb-3">
+                <div class="section-title mb-2">
+                    اطلاعات شخصی
+                </div>
+                <section class="shadow-around p-3">
+                    <div class="row">
+                        <div class="col-lg-6 mb-4">
+                            <div class="text-sm text-muted">نام و نام خانوادگی:</div>
+                            <div class="text-dark font-weight-bold">{{ user.get_full_name }}</div>
+                        </div>
+                        <div class="col-lg-6 mb-4">
+                            <div class="text-sm text-muted">پست الکترونیک:</div>
+                            <div class="text-dark font-weight-bold">{{ user.email }}</div>
+                        </div>
+                        <div class="col-lg-6 mb-4">
+                            <div class="text-sm text-muted">شماره تلفن همراه:</div>
+                            <div class="text-dark font-weight-bold">{{ user.phone_number }}</div>
+                        </div>
+                        <div class="col-lg-6 mb-4">
+                            <div class="text-sm text-muted">کد ملی:</div>
+                            <div class="text-dark font-weight-bold">{{ user.ssn }}</div>
+                        </div>
+                        <!-- <div class="col-lg-6 mb-4">
+                            <div class="text-sm text-muted">دریافت خبرنامه:</div>
+                            <div class="text-dark font-weight-bold">خیر</div>
+                        </div>
+                        <div class="col-lg-6 mb-4">
+                            <div class="text-sm text-muted">روش بازگشت وجه:</div>
+                            <div class="text-dark font-weight-bold">-</div>
+                        </div> -->
+                        <div class="col-12">
+                            <div class="text-center">
+                                <a href="{% url 'account:profile_personal_info' %}" class="link--with-border-bottom">
+                                    <i class="far fa-edit"></i>
+                                    ویرایش اطلاعات شخصی
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title mb-2">
+                    آخرین سفارش‌ها
+                </div>
+                <section class="table--order shadow-around">
+                    {% if orders %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>شماره سفارش</th>
+                                    <th>تاریخ ثبت سفارش</th>
+                                    <th>مبلغ قابل پرداخت</th>
+                                    <th>مبلغ کل</th>
+                                    <th>وضعیت پرداخت</th>
+                                    <th>وضعیت سفارش</th>
+                                    <th>نوع پرداخت</th>
+                                    <th>جزئیات سفارش</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               {% for order in orders %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td class="order-code">{{ order.code }}</td>
+                                        <td>{{ order.jcreated }}</td>
+                                        <td>{{ order.get_total_cost_after_discount|intcomma }} تومان</td>
+                                        <td>{{ order.get_total_cost|intcomma }} تومان</td>
+                                        <td>{{ order.show_shipping_status }}</td>
+                                        <td>
+                                            {% if order.show_paid %}
+                                                پرداخت شده
+                                            {% else %}
+                                                پرداخت نشده
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ order.show_payment_status }}</td>
+                                        <td class="order-detail-link">
+                                            <a href="{{ order.get_absolute_url }}">
+                                                <i class="far fa-chevron-left"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    
+                               {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-center py-3">
+                        <a href="{% url 'account:profile_order' %}" class="d-flex align-items-center justify-content-center text-dark">
+                            مشاهده لیست سفارش ها
+                            <i class="fal fa-arrow-to-left mr-1"></i>
+                        </a>
+                    </div>
+                    
+                    {% else %}
+                    <div class="empty-box">
+                        <div class="icon">
+                            <i class="fal fa-times-circle"></i>
+                        </div>
+                        <div class="message">
+                            <p>سفارشی برای نمایش وجود نداره!</p>
+                        </div>
+                    </div>  
+                    {% endif %}
+                    
+                </section>
+            </div>
+        </div>
+    </div>
+{% endblock %}

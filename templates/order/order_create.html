@@ -1,0 +1,103 @@
+{% extends '../base.html' %}
+{% load humanize %}
+
+{% block title %}مرحله ی نهایی پرداخت{% endblock %}
+
+{% block content %}
+    <main class="page-content">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-xl-9 col-lg-8 col-md-8 mb-md-0 mb-3">
+                    <div class="checkout-section shadow-around">
+                        <div class="checkout-step">
+                            <ul>
+                                <li class="active">
+                                    <a href="#"><span>سبد خرید</span></a>
+                                </li>
+                                <li class="active">
+                                    <span>نحوه ارسال و پرداخت</span>
+                                </li>
+                                <li>
+                                    <span>اتمام خرید و ارسال</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="checkout-section-content">
+                            <div class="checkout-section-title">آدرس تحویل سفارش</div>
+                                <div class="row mx-0">
+                                    <div class="col-xl-9 col-lg-9 col-md-9 mb-3">
+                                        <div class="shadow-around pt-3">
+                                            <div class="d-flex justify-content-between p-3 p-4">
+                                                <span>{{ order.address.title }}</span>
+                                                <span>
+                                                    <i class="fa fa-user"></i>
+                                                    {{ order.address.user.get_full_name }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <div>
+
+                            <div class="checkout-section-title">نحوه ی پرداخت</div>
+                                <div class="row mx-0">
+                                    <div class="col-xl-9 col-lg-9 col-md-9 mb-3">
+                                        <div class="shadow-around pt-3">
+                                            <div class="d-flex justify-content-between p-3 p-4">
+                                                <span> شما پرداخت به صورت <i style="color: green;" class="bold">{{ order.get_payment_type_display }}</i> را انتخاب کرده اید.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-9 col-lg-9 col-md-9">
+                    <div class="shadow-around pt-3">
+                        <div class="d-flex justify-content-between px-3 py-2">
+                            <span class="text-muted">قیمت کالاها</span>
+                            <span class="text-muted">
+                                {{ order.get_total_cost|intcomma }}
+                                <span class="text-sm">تومان</span>
+                            </span>
+                        </div>
+                        <div class="d-flex justify-content-between px-3 py-2">
+                            <span class="text-muted">تخفیف کالاها</span>
+                            <span class="text-danger">
+                                {{ order.get_discount_cost|intcomma }}
+                                <span class="text-sm">تومان</span>
+                            </span>
+                        </div>
+                        <hr>
+                        <hr>
+                        <div class="d-flex justify-content-between px-3 py-2">
+                            <span class="font-weight-bold">مبلغ قابل پرداخت</span>
+                            <span class="font-weight-bold">
+                                {{ order.get_total_cost_after_discount|intcomma }}
+                                <span class="text-sm">تومان</span>
+                            </span>
+                        </div>
+                        {% if order.payment_type == 'Check' %}
+                            <div class="d-flex px-3 py-4">
+                                <a href="{% url 'order:check_payment_form' %}" class="btn btn-danger btn-block py-2">بارگزاری عکس مربوط به چک</a>
+                            </div>
+
+                        {% elif order.payment_type == 'Internet' %}
+                            <form method='post' action="{% url 'payment:process' order.id %}">
+                                {{form.as_p}}
+                                {% csrf_token %}
+                                <input type='submit' class="btn btn-danger btn-block py-2" value="رفتن به درگاه پرداخت زرین پال">   
+                            </form>
+                        {% elif order.payment_type == 'Home' %}
+                            <div class="d-flex px-3 py-4">
+                                <a href="{% url 'payment:success_payment_home' %}" class="btn btn-danger btn-block py-2">تایید</a>
+                                <!-- <span class="btn btn-success btn-block py-2">منتظر ارسال کالا باشید و هزینه را درب منزل پرداخت کنید. با تشکر.</span> -->
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

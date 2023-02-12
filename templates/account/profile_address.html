@@ -1,0 +1,69 @@
+{% extends './base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}پروفایل شما - نشانی {% endblock %}
+
+{% block main %}
+    <div class="col-lg-9 col-md-8">
+        <div class="section-title mb-2">
+            نشانی
+        </div>
+        <div class="checkout-section shadow-around">
+            <div class="checkout-section-content">
+                <div class="row mx-0">
+
+                    <section class="shadow-around p-3 m-3">
+                        {% if address %}
+                            <form action="" method="post">
+                                {% csrf_token %}    
+                                <div class="row">
+                                    <div class="col-lg-12 mb-5">
+                                        <div class="text-sm text-muted mb-3">آدرس:</div>
+                                        <div class="text-dark font-weight-bold">
+                                            <div class="form-element-row mb-0">
+                                                {{ address.title }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 p-4">
+                                    <div class="form-element-row text-left">
+                                        <a href="{% url 'account:profile_address_update' %}" class="btn-element btn-success-element" style="padding: 12px;">
+                                            <i class="fad fa-user-edit"></i>
+                                            ویرایش آدرس
+                                        </a>
+                                    </div>
+                                </div>
+                            </form>
+                        {% else %}
+                            
+                                <div class="row">
+                                    <div class="col-lg-12 mb-5">
+                                        <div class="text-sm text-muted mb-3">آدرس:</div>
+                                        <div class="text-dark font-weight-bold">
+                                            <div class="form-element-row mb-0">
+                                                
+                                                <a href="{% url 'account:profile_address_create' %}">
+                                                    <div class="col-xl-3 col-lg-4 col-sm-6 mb-3">
+                                                        <div class="custom-control custom-radio">
+                                                            <button class="add-address" data-toggle="modal"
+                                                                data-target="#addAddressModal">
+                                                                <i class="fa fa-plus"></i>
+                                                                افزودن ادرس 
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        {% endif %}
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends '../base.html' %}
+{% load humanize %}
+
+{%  block title %} دسته بندی کالاهای {{ category.title }} {%  endblock %}
+
+{% block content %}
+    <main class="page-content">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-lg-12 col-md-12">
+                    <div class="row">
+                        <div class="col-12">
+                            <!-- breadcrumb -->
+                            <div class="breadcrumb mb-2 pt-2">
+                                <nav>
+                                    {% if category.parent %}
+                                        <a href="{{ category.parent.get_absolute_url }}">{{ category.parent.title }}</a>
+                                    {% endif %}
+                                    <a href="{{ category.get_absolute_url }}">{{ category.title }}</a>
+                                    
+                                </nav>
+                            </div>
+                            <!-- end breadcrumb -->
+                        </div>
+                    </div>
+                    <div class="row mb-5">
+                        <div class="col-12">
+                            <div class="listing-items row">
+                                {% for product in products %}
+                                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 px-0 my-2">
+                                        <div class="product-card pb-2">
+                                            <div class="product-card-top">
+                                                <a href="" class="product-image">
+                                                    <img src="{{ product.images.first.image.url }}" alt="product image">
+                                                </a>
+                                            </div>
+                                            <div class="product-card-middle">
+                                                <div class="ratings-container">
+                                                    <div class="ratings">
+                                                        <div class="ratings-val" style="width: 65%;"></div>
+                                                    </div>
+                                                </div>
+                                                <h6 class="product-name">
+                                                    <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>
+                                                </h6>
+                                                <div class="product-price product-price-clone">{{ product.price_after_discount|intcomma }} تومان</div>
+                                            </div>
+                                            <div class="product-card-bottom">
+                                                <div class="product-price">
+                                                    {% if product.discount != 0 and product.check_discount_time %}
+                                                        <del class="text-danger">
+                                                            {{ product.price|intcomma }} تومان
+                                                        </del>
+                                                    {% else %}
+                                                        <p>
+                                                            {{ product.price|intcomma }} تومان
+                                                        </p>
+                                                    {% endif %}
+                                                </div>
+                                                <a href="{% url 'cart:item_add' product.id %}">
+                                                    <i class="fad fa-cart-plus"></i>
+                                                    افزودن به سبد خرید
+                                                </a>
+        
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends './base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %} ثبت نام{% endblock %}
+
+{% block content %}
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+            {{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+‌   {% endif %}
+
+    {% if form.non_field_errors %}
+        <div class="myerrors">
+            {{form.non_field_errors.as_text}}
+        </div>
+    {% endif %}
+    <main class="page-content">
+        <div class="container">
+            <div class="auth-wrapper">
+                <div class="auth-form shadow-around">
+                    <div class="site-logo">
+                        <a href="#">
+                            <img src="{% static './images/logo.png' %}" alt="logo">
+                        </a>
+                    </div>
+                    <div class="auth-form-title">
+                        ثبت نام در همتا
+                    </div>
+                    <form method="post">
+                        {% csrf_token %}
+
+                        {{ form|crispy }}
+                       
+                        <div class="form-element-row">
+                            <label class="container-checkbox">
+                                <a href="#" class="link--with-border-bottom">حریم خصوصی</a> و <a href="#"
+                                    class="link--with-border-bottom">شرایط و قوانین</a> استفاده از سرویس های سایت
+                                همتا را مطالعه نموده
+                                و با کلیه موارد آن موافقم.
+                                <input type="checkbox" checked="checked">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="form-element-row text-left">
+                            <button class="btn-element btn-success-element">
+                                <i class="fad fa-user-edit"></i>
+                                ثبت نام در همتا
+                            </button>
+                        </div>
+
+                    </form>
+                   
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

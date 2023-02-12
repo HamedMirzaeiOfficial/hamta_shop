@@ -1,0 +1,529 @@
+{% extends './base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}پروفایل شما - سفارشات شما{% endblock %}
+
+
+{% block main %}
+<div class="col-lg-9 col-md-8">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="section-title mb-2">
+                تاریخچه سفارشات
+            </div>
+            <section class="shadow-around p-3">
+                <div class="d-none d-sm-block">
+                    <ul class="nav nav-tabs" id="orders-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="paid-tab" data-toggle="tab"
+                                href="#paid" role="tab" aria-controls="paid"
+                                aria-selected="true">
+                                پرداخت شده
+                                <span class="badge badge-secondary">{{ paid_orders.count }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="wait-for-payment-tab" data-toggle="tab"
+                                href="#wait-for-payment" role="tab" aria-controls="wait-for-payment"
+                                aria-selected="true">
+                                در انتظار پرداخت
+                                <span class="badge badge-secondary">{{ waiting_payment_orders.count }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="wait-for-checking-tab" data-toggle="tab"
+                                href="#wait-for-checking" role="tab" aria-controls="wait-for-checking"
+                                aria-selected="true">
+                                در انتظار تایید چک
+                                <span class="badge badge-secondary">{{ waiting_for_checking_orders.count }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="pain-in-progress-tab" data-toggle="tab"
+                                href="#pain-in-progress" role="tab" aria-controls="pain-in-progress"
+                                aria-selected="false">
+                                ارسال شده
+                                <span class="badge badge-secondary">{{ posted_orders.count }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="delivered-tab" data-toggle="tab"
+                                href="#delivered" role="tab" aria-controls="delivered"
+                                aria-selected="false">
+                                تحویل داده شده
+                                <span class="badge badge-secondary">{{ delivered_orders.count }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="returned-tab" data-toggle="tab" href="#returned"
+                                role="tab" aria-controls="returned" aria-selected="false">
+                                مرجوعی
+                                <span class="badge badge-secondary">{{ returned_orders.count }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="canceled-tab" data-toggle="tab" href="#canceled"
+                                role="tab" aria-controls="canceled" aria-selected="false">
+                                لغو شده
+                                <span class="badge badge-secondary">{{ canceled_orders.count }}</span>
+                            </a>
+                        </li>
+                        
+                    </ul>
+                </div>
+                <div class="d-sm-none tab-responsive-order-list">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle btn-block" type="button"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            لیست سفارشات بر اساس
+                        </button>
+                        <div class="dropdown-menu shadow-around w-100"
+                            aria-labelledby="dropdownMenuButton">
+                            
+                            <a class="dropdown-item" data-toggle="tab" href="#paid"
+                                role="tab" aria-controls="paid" aria-selected="true">در
+                                پرداخت شده</a>
+
+                            <a class="dropdown-item" data-toggle="tab" href="#wait-for-payment"
+                                role="tab" aria-controls="wait-for-payment" aria-selected="true">در
+                                انتظار پرداخت</a>
+
+                            <a class="dropdown-item" data-toggle="tab" href="#wait-for-checking"
+                                role="tab" aria-controls="wait-for-checking" aria-selected="false">در
+                                در انتظار تایید چک</a>
+
+                            <a class="dropdown-item" data-toggle="tab" href="#pain-in-progress"
+                                role="tab" aria-controls="pain-in-progress" aria-selected="false">در
+                                ارسال شده</a>
+
+                            <a class="dropdown-item" data-toggle="tab" href="#delivered" role="tab"
+                                aria-controls="delivered" aria-selected="false">تحویل داده شده</a>
+
+                            <a class="dropdown-item" data-toggle="tab" href="#returned" role="tab"
+                                aria-controls="returned" aria-selected="false">مرجوعی</a>
+
+                            <a class="dropdown-item" data-toggle="tab" href="#canceled" role="tab"
+                                aria-controls="canceled" aria-selected="false">لغو شده</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content" id="orders-tab">
+
+                    <div class="tab-pane fade show active" id="paid" role="tabpanel"
+                        aria-labelledby="paid-tab">
+                        <section class="table--order shadow-around mt-4">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    {% if paid_orders %}
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>شماره سفارش</th>
+                                                <th>تاریخ ثبت سفارش</th>
+                                                <th>مبلغ قابل پرداخت</th>
+                                                <th>مبلغ کل</th>
+                                                <th>وضعیت پرداخت</th>
+                                                <th>وضعیت سفارش</th>
+                                                <th>نوع پرداخت</th>
+                                                <th>جزئیات سفارش</th>
+                                            </tr>
+                                        </thead>
+                                    {% endif %}
+                                    <tbody>
+                                        {% for order in paid_orders %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td class="order-code">{{ order.code }}</td>
+                                                <td>{{ order.jcreated }}</td>
+                                                <td>{{ order.get_total_cost_after_discount|intcomma }} تومان</td>
+                                                <td>{{ order.get_total_cost|intcomma }} تومان</td>
+                                                <td>{{ order.show_shipping_status }}</td>
+                                                <td>
+                                                    {% if order.show_paid %}
+                                                        پرداخت شده
+                                                    {% else %}
+                                                        پرداخت نشده
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ order.show_payment_status }}</td>
+                                                <td class="order-detail-link">
+                                                    <a href="{{ order.get_absolute_url }}">
+                                                        <i class="far fa-chevron-left"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% empty %}
+                                            <div class="empty-box">
+                                                <div class="icon">
+                                                    <i class="fal fa-times-circle"></i>
+                                                </div>
+                                                <div class="message">
+                                                    <p>سفارشی برای نمایش وجود نداره!</p>
+                                                </div>
+                                            </div>  
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+
+
+                    <div class="tab-pane fade show" id="wait-for-payment" role="tabpanel"
+                        aria-labelledby="wait-for-payment-tab">
+                        <section class="table--order shadow-around mt-4">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    {% if waiting_payment_orders %}
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>شماره سفارش</th>
+                                                <th>تاریخ ثبت سفارش</th>
+                                                <th>مبلغ قابل پرداخت</th>
+                                                <th>مبلغ کل</th>
+                                                <th>وضعیت پرداخت</th>
+                                                <th>وضعیت سفارش</th>
+                                                <th>نوع پرداخت</th>
+                                                <th>جزئیات سفارش</th>
+                                            </tr>
+                                        </thead>
+                                    {% endif %}
+                                    <tbody>
+                                        {% for order in waiting_payment_orders %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td class="order-code">{{ order.code }}</td>
+                                                <td>{{ order.jcreated }}</td>
+                                                <td>{{ order.get_total_cost_after_discount|intcomma }} تومان</td>
+                                                <td>{{ order.get_total_cost|intcomma }} تومان</td>
+                                                <td>{{ order.show_shipping_status }}</td>
+                                                <td>
+                                                    {% if order.show_paid %}
+                                                        پرداخت شده
+                                                    {% else %}
+                                                        پرداخت نشده
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ order.show_payment_status }}</td>
+                                                <td class="order-detail-link">
+                                                    <a href="{{ order.get_absolute_url }}">
+                                                        <i class="far fa-chevron-left"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% empty %}
+                                            <div class="empty-box">
+                                                <div class="icon">
+                                                    <i class="fal fa-times-circle"></i>
+                                                </div>
+                                                <div class="message">
+                                                    <p>سفارشی برای نمایش وجود نداره!</p>
+                                                </div>
+                                            </div>  
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                    
+                    <div class="tab-pane fade show" id="wait-for-checking" role="tabpanel"
+                        aria-labelledby="wait-for-checking-tab">
+                        <section class="table--order shadow-around mt-4">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    {% if waiting_for_checking_orders %}
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>شماره سفارش</th>
+                                                <th>تاریخ ثبت سفارش</th>
+                                                <th>مبلغ قابل پرداخت</th>
+                                                <th>مبلغ کل</th>
+                                                <th>وضعیت پرداخت</th>
+                                                <th>وضعیت سفارش</th>
+                                                <th>نوع پرداخت</th>
+                                                <th>جزئیات سفارش</th>
+                                            </tr>
+                                        </thead>
+                                    {% endif %}
+                                    <tbody>
+                                        {% for order in waiting_for_checking_orders %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td class="order-code">{{ order.code }}</td>
+                                                <td>{{ order.jcreated }}</td>
+                                                <td>{{ order.get_total_cost_after_discount|intcomma }} تومان</td>
+                                                <td>{{ order.get_total_cost|intcomma }} تومان</td>
+                                                <td>{{ order.show_shipping_status }}</td>
+                                                <td>
+                                                    {% if order.show_paid %}
+                                                        پرداخت شده
+                                                    {% else %}
+                                                        پرداخت نشده
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ order.show_payment_status }}</td>
+                                                <td class="order-detail-link">
+                                                    <a href="{{ order.get_absolute_url }}">
+                                                        <i class="far fa-chevron-left"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% empty %}
+                                            <div class="empty-box">
+                                                <div class="icon">
+                                                    <i class="fal fa-times-circle"></i>
+                                                </div>
+                                                <div class="message">
+                                                    <p>سفارشی برای نمایش وجود نداره!</p>
+                                                </div>
+                                            </div>  
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="tab-pane fade" id="pain-in-progress" role="tabpanel"
+                        aria-labelledby="pain-in-progress-tab">
+                        <section class="table--order shadow-around mt-4">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    {% if posted_orders %}
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>شماره سفارش</th>
+                                                <th>تاریخ ثبت سفارش</th>
+                                                <th>مبلغ قابل پرداخت</th>
+                                                <th>مبلغ کل</th>
+                                                <th>وضعیت پرداخت</th>
+                                                <th>وضعیت سفارش</th>
+                                                <th>نوع پرداخت</th>
+                                                <th>جزئیات سفارش</th>
+                                            </tr>
+                                        </thead>
+                                    {% endif %}
+
+                                    <tbody>    
+                                        {% for order in posted_orders %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td class="order-code">{{ order.code }}</td>
+                                                <td>{{ order.jcreated }}</td>
+                                                <td>{{ order.get_total_cost_after_discount|intcomma }} تومان</td>
+                                                <td>{{ order.get_total_cost|intcomma }} تومان</td>
+                                                <td>{{ order.show_shipping_status }}</td>
+                                                <td>
+                                                    {% if order.show_paid %}
+                                                        پرداخت شده
+                                                    {% else %}
+                                                        پرداخت نشده
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ order.show_payment_status }}</td>
+                                                <td class="order-detail-link">
+                                                    <a href="{{ order.get_absolute_url }}">
+                                                        <i class="far fa-chevron-left"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% empty %}
+                                            <div class="empty-box">
+                                                <div class="icon">
+                                                    <i class="fal fa-times-circle"></i>
+                                                </div>
+                                                <div class="message">
+                                                    <p>سفارشی برای نمایش وجود نداره!</p>
+                                                </div>
+                                            </div>  
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="tab-pane fade" id="delivered" role="tabpanel"
+                        aria-labelledby="delivered-tab">
+                        <section class="table--order shadow-around mt-4">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    {% if delivered_orders %}
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>شماره سفارش</th>
+                                                <th>تاریخ ثبت سفارش</th>
+                                                <th>مبلغ قابل پرداخت</th>
+                                                <th>مبلغ کل</th>
+                                                <th>وضعیت پرداخت</th>
+                                                <th>وضعیت سفارش</th>
+                                                <th>نوع پرداخت</th>
+                                                <th>جزئیات سفارش</th>
+                                            </tr>
+                                        </thead>
+                                    {% endif %}
+                                    <tbody>
+                                        {% for order in delivered_orders %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td class="order-code">{{ order.code }}</td>
+                                                <td>{{ order.jcreated }}</td>
+                                                <td>{{ order.get_total_cost_after_discount|intcomma }} تومان</td>
+                                                <td>{{ order.get_total_cost|intcomma }} تومان</td>
+                                                <td>{{ order.show_shipping_status }}</td>
+                                                <td>
+                                                    {% if order.show_paid %}
+                                                        پرداخت شده
+                                                    {% else %}
+                                                        پرداخت نشده
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ order.show_payment_status }}</td>
+                                                <td class="order-detail-link">
+                                                    <a href="{{ order.get_absolute_url }}">
+                                                        <i class="far fa-chevron-left"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% empty %}
+                                            <div class="empty-box">
+                                                <div class="icon">
+                                                    <i class="fal fa-times-circle"></i>
+                                                </div>
+                                                <div class="message">
+                                                    <p>سفارشی برای نمایش وجود نداره!</p>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="tab-pane fade" id="returned" role="tabpanel"
+                        aria-labelledby="returned-tab">
+                        <section class="table--order shadow-around mt-4">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    {% if returned_orders %}
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>شماره سفارش</th>
+                                                <th>تاریخ ثبت سفارش</th>
+                                                <th>مبلغ قابل پرداخت</th>
+                                                <th>مبلغ کل</th>
+                                                <th>وضعیت پرداخت</th>
+                                                <th>وضعیت سفارش</th>
+                                                <th>نوع پرداخت</th>
+                                                <th>جزئیات سفارش</th>
+                                            </tr>
+                                        </thead>
+                                    {% endif %}
+                                    <tbody>
+                                        {% for order in returned_orders %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td class="order-code">{{ order.code }}</td>
+                                                <td>{{ order.jcreated }}</td>
+                                                <td>{{ order.get_total_cost_after_discount|intcomma }} تومان</td>
+                                                <td>{{ order.get_total_cost|intcomma }} تومان</td>
+                                                <td>{{ order.show_shipping_status }}</td>
+                                                <td>
+                                                    {% if order.show_paid %}
+                                                        پرداخت شده
+                                                    {% else %}
+                                                        پرداخت نشده
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ order.show_payment_status }}</td>
+                                                <td class="order-detail-link">
+                                                    <a href="{{ order.get_absolute_url }}">
+                                                        <i class="far fa-chevron-left"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% empty %}
+                                            <div class="empty-box">
+                                                <div class="icon">
+                                                    <i class="fal fa-times-circle"></i>
+                                                </div>
+                                                <div class="message">
+                                                    <p>سفارشی برای نمایش وجود نداره!</p>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="tab-pane fade" id="canceled" role="tabpanel"
+                        aria-labelledby="canceled-tab">
+                        <section class="table--order shadow-around mt-4">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    {% if canceled_orders %}
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>شماره سفارش</th>
+                                                <th>تاریخ ثبت سفارش</th>
+                                                <th>مبلغ قابل پرداخت</th>
+                                                <th>مبلغ کل</th>
+                                                <th>وضعیت پرداخت</th>
+                                                <th>وضعیت سفارش</th>
+                                                <th>نوع پرداخت</th>
+                                                <th>نوع پرداخت</th>
+                                                <th>جزئیات سفارش</th>
+                                            </tr>
+                                        </thead>
+                                    {% endif %}
+                                    <tbody>
+                                        {% for order in canceled_orders %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td class="order-code">{{ order.code }}</td>
+                                                <td>{{ order.jcreated }}</td>
+                                                <td>{{ order.get_total_cost_after_discount|intcomma }} تومان</td>
+                                                <td>{{ order.get_total_cost|intcomma }} تومان</td>
+                                                <td>{{ order.show_shipping_status }}</td>
+                                                <td>
+                                                    {% if order.show_paid %}
+                                                        پرداخت شده
+                                                    {% else %}
+                                                        پرداخت نشده
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ order.show_payment_status }}</td>
+                                                <td class="order-detail-link">
+                                                    <a href="{{ order.get_absolute_url }}">
+                                                        <i class="far fa-chevron-left"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% empty %}
+                                            <div class="empty-box">
+                                                <div class="icon">
+                                                    <i class="fal fa-times-circle"></i>
+                                                </div>
+                                                <div class="message">
+                                                    <p>سفارشی برای نمایش وجود نداره!</p>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}

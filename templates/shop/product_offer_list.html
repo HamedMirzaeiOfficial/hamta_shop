@@ -1,0 +1,59 @@
+{% extends '../base.html' %}
+{% load humanize %}
+
+{%  block title %} دسته بندی کالاهای {{ category.title }} {%  endblock %}
+{% block content %}
+    <main class="page-content">
+        <div class="promotion-center--header">
+            <div class="promotion-center--title">
+                تخفیف ها و پیشنهاد ها
+            </div>
+            <div class="d-flex justify-content-center">
+                <div id="countdown--offer-slider"></div>
+            </div>
+        </div>
+        <div class="container translateY-25">
+            <div class="row mb-5">
+                <div class="col-12">
+                    <div class="listing-items row">
+                        {% for product in products %}
+                            <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 px-0">
+                                <div class="product-card pb-2">
+                                    <div class="product-card-top">
+                                        <a href="" class="product-image">
+                                            <img src="{{ product.images.first.image.url }}" alt="product image">
+                                        </a>
+                                    </div>
+                                    <div class="product-card-middle">
+                                        <div class="ratings-container">
+                                            <div class="ratings">
+                                                <div class="ratings-val" style="width: 65%;"></div>
+                                            </div>
+                                        </div>
+                                        <h6 class="product-name">
+                                            <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>
+                                        </h6>
+                                        <div class="product-price product-price-clone">{{ product.price_after_discount|intcomma }} تومان</div>
+                                    </div>
+                                    <div class="product-card-bottom">
+                                        <div class="product-price">
+                                            <del class="text-danger">
+                                                {{ product.price|intcomma }} تومان
+                                            </del>
+                                        </div>
+                                        <a href="{% url 'cart:item_add' product.id %}">
+                                            <i class="fad fa-cart-plus"></i>
+                                            افزودن به سبد خرید
+                                        </a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </main>
+{% endblock %}

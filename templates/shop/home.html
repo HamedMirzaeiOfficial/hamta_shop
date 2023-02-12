@@ -1,0 +1,339 @@
+{% extends '../base.html' %}
+{% load humanize %}
+{% block title %} صفحه اصلی {% endblock %}
+{% block content %}
+
+<main class="page-content">
+    <div class="container">
+        <div class="row d-none d-sm-block">
+            <div class="col-12 mb-3">
+                <div class="banner">
+                    <a href="{{ banners.0.link }}">
+                        <img src="{{ banners.0.image.url }}" alt="banner">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-lg-8 ml-lg-0 mb-3">
+                <div class="main-slider">
+                    <div class="swiper-container main-page-slider">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <a href="{{ banners.1.link }}">
+                                    <img src="{{ banners.1.image.url }}" alt="">
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="{{ banners.2.link }}"">
+                                    <img src="{{ banners.2.image.url }}" alt="">
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="{{ banners.3.link }}">
+                                    <img src="{{ banners.3.image.url }}" alt="">
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="{{ banners.4.link }}">
+                                    <img src="{{ banners.4.image.url }}" alt="">
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="{{ banners.5.link }}">
+                                    <img src="{{ banners.5.image.url }}" alt="">
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="{{ banners.6.link }}">
+                                    <img src="{{ banners.6.image.url }}" alt="">
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="{{ banners.7.link }}">
+                                    <img src="{{ banners.7.image.url }}" alt="">
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="{{ banners.8.link }}">
+                                    <img src="{{ banners.8.image.url }}" alt="">
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="{{ banners.9.link }}">
+                                    <img src="{{ banners.9.image.url }}" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Add Arrows -->
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                    <div class="swiper-container main-page-slider-thumbs d-none d-sm-block">
+                        <div class="swiper-wrapper">
+                         
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-6 col-12">
+                        <div class="banner mb-3">
+                            <a href="{{ banners.10.link }}">
+                                <img src="{{ banners.10.image.url }}" alt="banner">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-sm-6 col-12">
+                        <div class="banner">
+                            <a href="{{ banners.11.link }}">
+                                <img src="{{ banners.11.image.url }}" alt="banner">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center mb-4">
+            <div class="col-lg-4 order-2 order-lg-1">
+                <div class="row mt-4 mt-lg-0">
+                    <div class="col-lg-12 col-sm-6 col-12">
+                        <div class="banner mb-4">
+                            <a href="{{ banners.12.link }}">
+                                <img src="{{ banners.12.image.url }}" alt="banner">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-sm-6 col-12">
+                        <div class="banner">
+                            <a href="{{ banners.13.link }}">
+                                <img src="{{ banners.13.image.url }}" alt="banner">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 order-1 order-lg-2">
+                <div class="offer-slider-wrapper">
+                    <div class="offer-slider-title">پیشنهاد شگفت انگیز</div>
+                    <div class="row">
+                        <div class="col-12 mb-1">
+                            <div class="swiper-container offer-slider">
+                                <div class="swiper-wrapper">
+                                    {% for product in offer_product %}
+                                        <div class="swiper-slide">
+                                            <div class="row align-items-center pb-3">
+                                                <div class="col-sm-6 col-12 order-2 order-sm-1">
+                                                    <div class="product-title">
+                                                        <a href="{{ product.get_absolute_url }}">
+                                                            {{ product.title }}
+                                                        </a>
+                                                    </div>
+                                                    <div class="product-price">
+                                                        <del>{{ product.price|intcomma }} تومان</del>
+                                                        {{ product.get_price_after_discount|intcomma }} تومان 
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 col-12 order-1 order-sm-2">
+                                                    <div class="offer-slide-content">
+                                                        <div class="product-thumbnail">
+                                                            <a href="{{ product.get_absolute_url }}">
+                                                                <img src="{{ product.images.first.image.url }}" alt="item">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row align-items-center pb-4">
+                        <div class="col-lg-8 mt-2 mb-4 mb-lg-0">
+                            <div class="offer-slider-thumbs-wrapper">
+                                <div class="px-0 px-sm-5">
+                                    <div class="swiper-container offer-slider-thumbs">
+                                        <div class="swiper-wrapper">
+                                            {% for product in offer_product %}
+                                                <div class="swiper-slide">
+                                                    <img src="{{ product.images.first.image.url }}" alt="item">
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                        <!-- Add Pagination -->
+                                        <div class="swiper-pagination"></div>
+                                    </div>
+                                </div>
+                                <!-- Add Arrows -->
+                                <div class="offer-slider-button-next"><i class="far fa-chevron-left"></i></div>
+                                <div class="offer-slider-button-prev"><i class="far fa-chevron-right"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="d-flex justify-content-center">
+                                <div id="countdown--offer-slider"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section class="product-carousel in-box">
+            <div class="section-title">
+                <i class="fad fa-pen-nib"></i>
+                موبایل
+            </div>
+            <div class="swiper-container slider-lg">
+                <div class="swiper-wrapper">
+                    {% for product in last_products %}
+                        <div class="swiper-slide">
+                            <div class="product-card">
+                                <div class="product-card-top">
+                                    {% if product.images %}
+                                        <a href="{{ product.get_absolute_url }}" class="product-image">
+                                            <img src="{{ product.images.first.image.url }}" alt="product image">
+                                        </a>
+                                    {% else %}
+                                        <a href="" class="product-image">
+                                            <img src="./assets/images/products/01.jpg" alt="product image">
+                                        </a>
+                                    {% endif %}
+                                </div>
+                                <div class="product-card-middle">
+                                    <div class="ratings-container">
+                                        <div class="ratings">
+                                            <div class="ratings-val" style="width: 65%;"></div>
+                                        </div>
+                                    </div>
+                                    <h6 class="product-name">
+                                        <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>
+                                    </h6>
+                                    <div class="product-price product-price-clone">
+                                        {{ product.get_price_after_discount|intcomma }} تومان</div>
+                                </div>
+                                <div class="product-card-bottom">
+                                    {% if product.discount != 0 and product.check_discount_time %}
+                                        <div class="product-price">
+                                            <del class="text-danger">{{ product.price|intcomma }} تومان</del>
+                                        </div>
+                                    {% else %}
+                                        <div class="product-price">
+                                            <p>{{ product.price_after_discount|intcomma }} تومان</p>
+                                        </div>
+                                    {% endif %}
+                                    <a href="{% url 'cart:item_add' product.id %}" class="">
+                                        <i class="fad fa-cart-plus"></i>
+                                        افزودن به سبد خرید
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <!-- Add Arrows -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </section>
+        <div class="row mb-5">
+            <div class="col-md-3 col-6 mb-lg-0 mb-3">
+                <div class="banner">
+                    <a href="{{ banners.14.link }}">
+                        <img src="{{ banners.14.image.url }}" alt="banner">
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-lg-0 mb-3">
+                <div class="banner">
+                    <a href="{{ banners.15.link }}">
+                        <img src="{{ banners.15.image.url }}" alt="banner">
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-lg-0 mb-3">
+                <div class="banner">
+                    <a href="{{ banners.16.link }}">
+                        <img src="{{ banners.16.image.url }}" alt="banner">
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-3  col-6 mb-lg-0 mb-3">
+                <div class="banner">
+                    <a href="{{ banners.17.link }}">
+                        <img src="{{ banners.17.image.url }}" alt="banner">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-md-6 mb-lg-0 mb-3">
+                <div class="banner">
+                    <a href="{{ banners.18.link }}">
+                        <img src="{{ banners.18.image.url }}" alt="banner">
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6 mb-lg-0 mb-3">
+                <div class="banner">
+                    <a href="{{ banners.19.link }}">
+                        <img src="{{ banners.19.image.url }}" alt="banner">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-12 mb-4">
+                <div class="section-title">
+                    <i class="fad fa-sort-size-up-alt"></i>
+                    پرفروش ترین ها
+                </div>
+            </div>
+                {% for product in best_sellers_products %}
+                    <div class="col-lg-4">
+                        <div class="product-card product-card-horizontal border-bottom">
+                            <div class="product-card-top">
+                                <a href="{{ product.get_absolute_url }}" class="product-image">
+                                    <img src="{{ product.images.first.image.url }}" alt="product image">
+                                </a>
+                            </div>
+                            <div class="product-card-middle">
+                                <div class="ratings-container">
+                                    <div class="ratings">
+                                        <div class="ratings-val" style="width: 65%;"></div>
+                                    </div>
+                                </div>
+                                
+                                <h6 class="product-name">
+                                    <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>
+                                </h6>
+                                
+                                <div class="product-price product-price-clone">{{ product.price|intcomma }} تومان</div>
+                                
+                            </div>
+                            <div class="product-card-bottom">
+                                <div class="product-price">
+                                    {% if product.discount != 0 and product.check_discount_time %}
+                                        <del class="text-danger p-4" >{{ product.price|intcomma }} تومان</del>
+                                    {% else %}
+                                        <del class="text-danger p-4" ></del>
+                                    {% endif %}
+                                    <p class="px-4">{{ product.get_price_after_discount|intcomma }} تومان </p>
+                                </div>
+                                
+                                <a href="{% url 'cart:item_add' product.id %}" class="">
+                                    <i class="fad fa-cart-plus"></i>
+                                    افزودن به سبد خرید
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

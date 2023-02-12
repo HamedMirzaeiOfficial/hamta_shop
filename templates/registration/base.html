@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <!-- font-awesome -->
+    <link rel="stylesheet" href="{% static './css/font-awesome.min.css' %}">
+    <!-- Bootstrap 4.5.3 -->
+    <link rel="stylesheet" href="{% static './bootstrap/css/bootstrap.min.css' %}">
+    <!-- CSS Implementing Plugins -->
+    <link rel="stylesheet" href="{% static './css/plugins/apexcharts.css' %}">
+    <link rel="stylesheet" href="{% static './css/plugins/jquery.classycountdown.min.css' %}">
+    <link rel="stylesheet" href="{% static './css/plugins/nouislider.min.css' %}">
+    <link rel="stylesheet" href="{% static './css/plugins/sweetalert2.min.css' %}">
+    <link rel="stylesheet" href="{% static './css/plugins/select2.min.css' %}">
+    <link rel="stylesheet" href="{% static './css/plugins/swiper.min.css' %}">
+    <!-- CSS Template -->
+    <link rel="stylesheet" href="{% static './css/theme.css' %}">
+    <!-- Here goes your custom.css -->
+    <link rel="stylesheet" href="{% static './css/custom.css' %}">
+    <!-- colors: amber,blue,brown,cyan,default,green,indigo,orange,pink,purple,red,teal,yellow -->
+    <link rel="stylesheet" href="{% static './css/colors/default.css' %}" id="colorswitch">
+</head>
+
+<body>
+
+    {% block content %}
+    {% endblock %}
+
+
+    <!-- JS Global Compulsory -->
+    <script src="{% static './js/jquery-3.5.1.min.js' %}"></script>
+    <script src="{% static './js/plugins/popper.min.js' %}"></script>
+    <script src="{% static './bootstrap/js/bootstrap.min.js' %}"></script>
+    <!-- JS Implementing Plugins -->
+    <script src="{% static './js/plugins/apexcharts.min.js' %}"></script>
+    <script src="{% static './js/plugins/jquery.knob.js' %}"></script>
+    <script src="{% static './js/plugins/jquery.throttle.js' %}"></script>
+    <script src="{% static './js/plugins/jquery.classycountdown.min.js' %}"></script>
+    <script src="{% static './js/plugins/jquery.nicescroll.min.js' %}"></script>
+    <script src="{% static './js/plugins/nouislider.min.js' %}"></script>
+    <script src="{% static './js/plugins/sweetalert2.all.min.js' %}"></script>
+    <script src="{% static './js/plugins/select2.full.min.js' %}"></script>
+    <script src="{% static './js/plugins/swiper.min.js' %}"></script>
+    <script src="{% static './js/plugins/ResizeSensor.min.js' %}"></script>
+    <script src="{% static './js/plugins/theia-sticky-sidebar.min.js' %}"></script>
+    <script src="{% static './js/plugins/zoomsl.min.js' %}"></script>
+    <script src="{% static './js/plugins/wNumb.js' %}"></script>
+    <!-- JS Template -->
+    <script src="{% static './js/theme.js' %}"></script>
+    <!-- Here goes your custom.js -->
+    <script src="{% static './js/custom.js' %}"></script>
+</body>
+
+</html>

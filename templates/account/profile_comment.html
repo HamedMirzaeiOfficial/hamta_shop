@@ -1,0 +1,48 @@
+{% extends './base.html' %}
+{% load static %}
+{% block title %}پروفایل شما - اطلاعات حساب{% endblock %}
+
+{% block main %}
+    <div class="col-lg-9 col-md-8">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="section-title mb-2">
+                    نظرات من
+                </div>
+                <section class="shadow-around p-3">
+                    <div class="row">
+                        {% for comment in comments %}
+                            <div class="col-lg-6 mb-4">
+                                <div class="shadow-around p-3">
+                                    <div class="d-flex align-items-center justify-content-between mb-3">
+                                        <span class="font-weight-bold">{{ comment.title }}</span>
+                                        {% if comment.status == 'waiting' %}
+                                            <span class="badge badge-warning">در انتظار تایید</span>
+                                        {% elif comment.status == 'not accepted' %}
+                                            <span class="badge badge-danger">تایید نشده</span>  
+                                        {% else %}
+                                            <span class="badge badge-success">تایید شده</span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="d-flex">
+                                        <p class="text-sm text-muted mb-3">
+                                           {{ comment.description }}
+                                        </p>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <cite class="text-sm">در تاریخ {{ comment.jcreated_on }}</cite>
+                                        <a href="{% url 'account:comment_delete' comment.id %}" class="btn btn-light btn-sm">
+                                            حذف
+                                            <i class="far fa-trash-alt mr-2"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                       
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+{% endblock %}

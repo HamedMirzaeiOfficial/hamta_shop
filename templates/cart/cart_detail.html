@@ -1,0 +1,131 @@
+{% extends '../base.html' %}
+{% load humanize %}
+
+{% block title %}سبد خرید{% endblock %}
+
+{% block content %}
+<main class="page-content">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-xl-9 col-lg-8 col-md-8 mb-md-0 mb-3">
+                <div class="checkout-section shadow-around">
+                    <div class="checkout-step">
+                        <ul>
+                            <li class="active"><span>سبد خرید</span></li>
+                            <li>
+                                <span>نحوه ارسال و پرداخت</span>
+                            </li>
+                            <li>
+                                <span>اتمام خرید و ارسال</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="checkout-section-content">
+                        <div class="cart-items">
+                            {% for item in cart %}
+                                {% with product=item.product %}
+                                <div class="cart-item py-4 px-3">
+                                    <div class="item-thumbnail">
+                                        <a href="{{ product.get_absolute_url }}">
+                                            <img src="{{ product.images.first.image.url }}" alt="item">
+                                        </a>
+                                    </div>
+                                    <div class="item-info flex-grow-1">
+                                        <div class="item-title">
+                                            <h2>
+                                                <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>
+                                            </h2>
+                                        </div>
+                                        <div class="item-detail">
+                                            <ul>
+                                                <li>
+                                                    <i class="far fa-shield-check text-muted"></i>
+                                                    <span>گارانتی {{ product.guarantee }} ماهه</span>
+                                                </li>
+                                                
+                                                <li>
+                                                    <i class="far fa-clipboard-check text-primary"></i>
+                                                    {% if product.available %}
+                                                        <span>موجود در انبار</span>
+                                                    {% else %}
+                                                        <span>ناموجود در انبار</span>
+                                                    {% endif %}
+                                                </li>
+                                            </ul>
+                                            <div class="item-quantity--item-price">
+                                                <div class="item-quantity">
+                                                    <div class="num-block">
+                                                        <form action="" method="post">
+                                                            {% csrf_token %}
+                                                        <div class="num-in">
+                                                            <a href="{% url 'cart:item_increment' product.id %}">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                                                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+                                                                  </svg>
+                                                            </a>
+                                                            <input type="text" class="in-num" value="{{ item.quantity }}" readonly>
+                                                            <a class="" href="{% url 'cart:item_decrement' product.id %}">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
+                                                                    <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z"/>
+                                                                  </svg>
+                                                            </a>
+                                                        </div>
+                                                        </form>
+                                                    </div>
+                                                    <a href="{% url 'cart:item_clear' product.id %}">
+                                                        <button class="item-remove-btn mr-3">
+                                                            <i class="far fa-trash-alt"></i>
+                                                            حذف
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                                <div class="item-price">
+                                                    {{ product.price|intcomma }}<span class="text-sm mr-1">تومان</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endwith %}
+                            {% empty %}
+                                سبد خرید شما خالی میباشد.
+                            {% endfor %}
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-4">
+                <div class="shadow-around pt-3">
+                    <div class="d-flex justify-content-between px-3 py-2">
+                        <span class="text-muted">قیمت کالاها ({{ cart|length }})</span>
+                        <span class="text-muted">
+                            {{ cart.get_total_price|intcomma }}
+                            <span class="text-sm">تومان</span>
+                        </span>
+                    </div>
+                    <div class="d-flex justify-content-between px-3 py-2">
+                        <span class="text-muted">تخفیف کالاها</span>
+                        <span class="text-danger">
+                            {{ cart.get_discount_price|intcomma }}
+                            <span class="text-sm">تومان</span>
+                        </span>
+                    </div>
+                    <hr>
+                    <hr>
+                    <div class="d-flex justify-content-between px-3 py-2">
+                        <span class="font-weight-bold">مبلغ قابل پرداخت</span>
+                        <span class="font-weight-bold">
+                            {{ cart.get_total_price_after_discount|intcomma }}
+                            <span class="text-sm">تومان</span>
+                        </span>
+                    </div>
+                    <div class="d-flex px-3 py-4">
+                        <a href="{% url 'order:order_process' %}" class="btn btn-danger btn-block py-2">ادامه فرایند خرید</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

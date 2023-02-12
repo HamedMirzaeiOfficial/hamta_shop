@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-12 px-0">
+      <div class="pagination">
+        {% if page.has_previous %}
+          <a href="?page={{ page.previous_page_number }}" class="prev"><i class="far fa-arrow-from-left"></i></a>
+        {% endif %}
+        
+        <a href="#" class="current">{{ page.number }}</a>
+        
+        {% if page.has_next %}
+          <a href="?page={{ page.next_page_number }}" class="next"><i class="far fa-arrow-to-left"></i></a>
+        {% endif %}
+      </div>
+  </div>
+</div>

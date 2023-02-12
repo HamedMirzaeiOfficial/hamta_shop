@@ -1,0 +1,27 @@
+{% extends '../base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %} ارسال مدارک{% endblock %}
+
+{% block content %}
+    <main class="page-content">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-xl-12 col-lg-12 col-md-12 mb-md-0 mb-3">
+                    <div class="checkout-section shadow-around">
+                        <div class="alert alert-success col-md-12"><span class="d-flex justify-content-center">آپلود مدارک</span></div>
+                        <div class="mb-4 mx-4"><span>بعد از ارسال مدارک با شما تماس میگیریم!</span></div>
+                        
+                        <form method="post" enctype="multipart/form-data" class="mx-4">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <div class="px-3 py-4">
+                                <input value="ارسال مدارک" class="d-flex align-items-center justify-content-center px-4 py-2 btn btn-primary" type="submit" name="" id="">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
