@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-z0-#p3aviz71b8tdz!@ft=n6z#37+8ln0djvsh4k^$@!&h8a7d'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -87,17 +87,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
 
 DATABASES = {
@@ -210,18 +199,11 @@ AUTH_USER_MODEL = 'account.User'
 
 
 
-MERCHANT_ID = '6f1c037a-537d-4f15-86b6-87a1001f0483'
+MERCHANT_ID = ''
 
 ZARINPAL = {
     'gateway_request_url': 'https://www.zarinpal.com/pg/services/WebGate/wsdl',
     'gateway_callback_url': 'http://127.0.0.1:2003/payment/verify',
     'merchant_id': MERCHANT_ID
 }
-
-
-
-# اضافه کردن بخش رنگ برای انتخاب کالا در دیتایل.
-# اضافه کردن رنگ به بخش نظر کاربر
-# فقط کاربرانی که محصول را خریده اند رای بدهند
-#بخش ثبت نام و ورود با شماره تلفن
 
