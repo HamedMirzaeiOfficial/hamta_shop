@@ -4,6 +4,7 @@ from account.models import User
 from django.urls import reverse
 from taggit.managers import TaggableManager
 from extensions.utils import jalali_converter
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class PublishedManager(models.Manager):
@@ -21,7 +22,7 @@ class Post(models.Model):
     slug = models.SlugField(max_length=250, unique_for_date='publish', verbose_name="اسلاگ مقاله")
     image = models.ImageField(upload_to='images/post_image', verbose_name="عکس مقاله")
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts', verbose_name="نویسنده مقاله")
-    body = models.TextField(verbose_name="متن مقاله")
+    body = RichTextUploadingField(null=True, verbose_name="محتوای مقاله")
     publish = models.DateTimeField(default=timezone.now, verbose_name="تاریخ انتشار مقاله")
     created = models.DateTimeField(auto_now_add=True, verbose_name="تاریخ ایجاد مقاله")
     updated = models.DateTimeField(auto_now=True, verbose_name="تاریخ بروزرسانی مقاله")

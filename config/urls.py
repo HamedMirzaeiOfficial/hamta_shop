@@ -35,6 +35,7 @@ urlpatterns = [
     path('order/', include('order.urls', namespace='order')),
     path('account/', include('account.urls', namespace='account')),
     path('payment/', include('payment.urls', namespace='payment')), 
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
 if settings.DEBUG:

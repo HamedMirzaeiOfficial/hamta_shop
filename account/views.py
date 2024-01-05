@@ -30,6 +30,7 @@ from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 class Profile(LoginRequiredMixin, UpdateView):
@@ -70,14 +71,16 @@ class ProfileAddressCreate(LoginRequiredMixin, CreateView):
         address = form.save(commit=False)
         address.user = self.request.user
         address.save()        
+        messages.success("آدرس ایجاد گردید")
         return super().form_valid(form)
 
 
-class ProfileAddressUpdate(LoginRequiredMixin, UpdateView):
+class ProfileAddressUpdate(LoginRequiredMixin, UpdateView, SuccessMessageMixin):
     model = Address
     fields = ['title', ]
     template_name = 'account/profile_address_update.html'
     success_url = reverse_lazy('account:profile_address')
+    success_message = 'تغییرات ثبت گردید'
 
     def get_object(self):
         return Address.objects.get(user=self.request.user) 

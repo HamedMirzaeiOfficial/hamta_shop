@@ -159,22 +159,6 @@ user agent stylesheet
                                 <input type="text" name="q" placeholder="نام محصول یا برند را جستجو کنید...">
                                 <i class="far fa-search"></i>
                             </form>
-                            <!-- <div class="search-result">
-                                <ul class="search-result-list">
-                                    <li><a href="#">موبایل</a></li>
-                                    <li><a href="#">سامسونگ</a></li>
-                                    <li><a href="#">مودم</a></li>
-                                    <li><a href="#">اپل</a></li>
-                                    <li><a href="#">تلویزیون</a></li>
-                                </ul>
-                                <ul class="search-result-most-view">
-                                    <li><a href="#">موبایل</a></li>
-                                    <li><a href="#">سامسونگ</a></li>
-                                    <li><a href="#">مودم</a></li>
-                                    <li><a href="#">اپل</a></li>
-                                    <li><a href="#">تلویزیون</a></li>
-                                </ul>
-                            </div> -->
                         </div>
                     </div>
                     <div class="user-items">
@@ -228,7 +212,7 @@ user agent stylesheet
                             </ul>
                         </div>
                         <div class="user-item account">
-                            <a href="#">
+                            <a href="{% url 'accounts:profile' %}">
                                 {{ request.user.get_full_name }}
                                 <i class="fad fa-chevron-down text-sm mr-1"></i>
                             </a>
@@ -435,22 +419,6 @@ user agent stylesheet
                         <input type="text" name="q" placeholder="نام محصول یا برند را جستجو کنید...">
                         <i class="far fa-search"></i>
                     </form>
-                    <!-- <div class="search-result" style="display: none;">
-                        <ul class="search-result-list">
-                            <li><a href="#">موبایل</a></li>
-                            <li><a href="#">سامسونگ</a></li>
-                            <li><a href="#">مودم</a></li>
-                            <li><a href="#">اپل</a></li>
-                            <li><a href="#">تلویزیون</a></li>
-                        </ul>
-                        <ul class="search-result-most-view">
-                            <li><a href="#">موبایل</a></li>
-                            <li><a href="#">سامسونگ</a></li>
-                            <li><a href="#">مودم</a></li>
-                            <li><a href="#">اپل</a></li>
-                            <li><a href="#">تلویزیون</a></li>
-                        </ul>
-                    </div> -->
                 </div>
                 <div class="header-tools">
                     <a href="{% url 'account:profile' %}"><i class="far fa-user-circle"></i></a>

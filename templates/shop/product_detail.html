@@ -106,23 +106,6 @@
                 </div>
                 <div class="col-xl-3 col-lg-4 col-md-6 mx-lg-0 mx-auto">
                     <div class="box-info-product">
-                        <div class="product-colors mb-3">
-                            <!-- <span class="d-block mb-3">رنگ:</span>
-                            <div class="input-radio-color">
-                                <div class="input-radio-color__list">
-                                    <label class="input-radio-color__item input-radio-color__item--white"
-                                        style="color: #fff;">
-                                        <input type="radio" name="color"> <span></span></label>
-                                    <label class="input-radio-color__item" style="color: #ffd333;">
-                                        <input type="radio" name="color"> <span></span></label>
-                                    <label class="input-radio-color__item" style="color: #ff4040;">
-                                        <input type="radio" name="color"> <span></span></label>
-                                    <label class="input-radio-color__item input-radio-color__item--disabled"
-                                        style="color: #4080ff;">
-                                        <input type="radio" name="color" disabled=""> <span></span></label>
-                                </div>
-                            </div> -->
-                        </div>
                         <div class="d-block mb-3">
                             <span class="d-block">
                                 تعداد:
@@ -138,8 +121,6 @@
                                         {% with pr=item.product %}
                                             {% if pr == product %}
                                                 <input type="text" class="in-num" value="{{ item.quantity }}" readonly>
-                                            {% else %}
-                                                <input type="text" class="in-num" value="0" readonly>
                                             {% endif %}    
                                         {% endwith %}
                                     {% empty %}
@@ -430,77 +411,6 @@
 </main>
 <!-- end Page Content -->
 
-<!-- shareLinkModal -->
-<div class="modal fade" id="shareLinkModal" tabindex="-1" aria-labelledby="shareLinkModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="shareLinkModalLabel">اشتراک‌گذاری</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p class="text-muted">با استفاده از روش‌های زیر می‌توانید این صفحه را با دوستان خود به اشتراک
-                    بگذارید.</p>
-                <div class="social py-3">
-                    <ul>
-                        <li>
-                            <a href="#" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
-                        </li>
-                        <li>
-                            <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
-                        </li>
-                        <li>
-                            <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
-                        </li>
-                        <li>
-                            <a href="#" class="telegram"><i class="fab fa-telegram-plane"></i></a>
-                        </li>
-                    </ul>
-                </div>
-                <span class="d-block font-weight-bold mb-1">لینک کوتاه</span>
-                <div class="form-element-row mb-0">
-                    <input type="text" class="input-element dir-ltr text-sm"
-                        value="https://www.rtl-theme.com/?p=171652">
-                </div>
-                <div class="py-4">
-                    <hr>
-                    <div class="pt-3">
-                        <h6>جایزه شما</h6>
-                        <p class="text-muted mb-2">با دعوت دوستانتان، پس از اولین خریدشان، کدتخفیف و امتیاز هدیه
-                            بگیرید.
-                        </p>
-                        <a href="#" class="btn btn-sm btn-outline-danger">دریافت کد تخفیف</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end shareLinkModal -->
 
-<!-- chartModal -->
-<div class="modal fade" id="chartModal" tabindex="-1" aria-labelledby="chartModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="chartModalLabel">
-                    نمودار قیمت فروش
-                    <p class="text-muted text-sm">گوشی موبایل سامسونگ مدل Galaxy A30s SM-A307FN/DS دو سیم کارت
-                        ظرفیت 32 گیگابایت</p>
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div id="chart" style="height:350px"></div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end chartModal -->
 
 {% endblock %}

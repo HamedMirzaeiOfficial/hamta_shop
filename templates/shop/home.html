@@ -25,21 +25,7 @@
                                     <img src="{% static './images/main-slider/slider-1.jpg' %}" alt="">
                                 </a>
                             </div>
-                            <div class="swiper-slide">
-                                <a href="#">
-                                    <img src="{% static './images/main-slider/slider-2.jpg' %}" alt="">
-                                </a>
-                            </div>
-                            <div class="swiper-slide">
-                                <a href="#">
-                                    <img src="{% static './images/main-slider/slider-3.jpg' %}" alt="">
-                                </a>
-                            </div>
-                            <div class="swiper-slide">
-                                <a href="#">
-                                    <img src="{% static './images/main-slider/slider-4.jpg' %}" alt="">
-                                </a>
-                            </div>
+                            
                             <div class="swiper-slide">
                                 <a href="#">
                                     <img src="{% static './images/main-slider/slider-5.jpg' %}" alt="">
@@ -50,21 +36,13 @@
                                     <img src="{% static './images/main-slider/slider-6.jpg' %}" alt="">
                                 </a>
                             </div>
-                            <div class="swiper-slide">
-                                <a href="#">
-                                    <img src="{% static './images/main-slider/slider-7.jpg' %}" alt="">
-                                </a>
-                            </div>
+                           
                             <div class="swiper-slide">
                                 <a href="#">
                                     <img src="{% static './images/main-slider/slider-8.jpg' %}" alt="">
                                 </a>
                             </div>
-                            <div class="swiper-slide">
-                                <a href="#">
-                                    <img src="{% static './images/main-slider/slider-9.jpg' %}" alt="">
-                                </a>
-                            </div>
+                           
                         </div>
                         <!-- Add Arrows -->
                         <div class="swiper-button-next"></div>
@@ -102,14 +80,14 @@
                     <div class="col-lg-12 col-sm-6 col-12">
                         <div class="banner mb-4">
                             <a href="#">
-                                <img src="{% static './images/banner/banner-md-04.gif' %}" alt="banner">
+                                <img src="{% static './images/main-slider/slider-5.jpg' %}" alt="banner">
                             </a>
                         </div>
                     </div>
                     <div class="col-lg-12 col-sm-6 col-12">
                         <div class="banner">
                             <a href="#">
-                                <img src="{% static './images/banner/banner-md-05.gif' %}" alt="banner">
+                                <img src="{% static './images/main-slider/slider-8.jpg' %}" alt="banner">
                             </a>
                         </div>
                     </div>
@@ -204,11 +182,7 @@
                                     {% endif %}
                                 </div>
                                 <div class="product-card-middle">
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 65%;"></div>
-                                        </div>
-                                    </div>
+                                    
                                     <h6 class="product-name">
                                         <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>
                                     </h6>
@@ -239,48 +213,19 @@
                 <div class="swiper-button-prev"></div>
             </div>
         </section>
-        <div class="row mb-5">
-            <div class="col-md-3 col-6 mb-lg-0 mb-3">
-                <div class="banner">
-                    <a href="#">
-                        <img src="{% static './images/banner/banner-sm-01.jpg' %}" alt="banner">
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-3 col-6 mb-lg-0 mb-3">
-                <div class="banner">
-                    <a href="#">
-                        <img src="{% static './images/banner/banner-sm-02.jpg' %}" alt="banner">
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-3 col-6 mb-lg-0 mb-3">
-                <div class="banner">
-                    <a href="#">
-                        <img src="{% static './images/banner/banner-sm-03.jpg' %}" alt="banner">
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-3  col-6 mb-lg-0 mb-3">
-                <div class="banner">
-                    <a href="#">
-                        <img src="{% static './images/banner/banner-sm-04.jpg' %}" alt="banner">
-                    </a>
-                </div>
-            </div>
-        </div>
+        
         <div class="row mb-5">
             <div class="col-md-6 mb-lg-0 mb-3">
                 <div class="banner">
                     <a href="#">
-                        <img src="{% static './images/banner/banner-md-01.jpg' %}" alt="banner">
+                        <img src="{% static './images/main-slider/slider-9.jpg' %}" alt="banner">
                     </a>
                 </div>
             </div>
             <div class="col-md-6 mb-lg-0 mb-3">
                 <div class="banner">
                     <a href="#">
-                        <img src="{% static './images/banner/banner-md-02.jpg' %}" alt="banner">
+                        <img src="{% static './images/main-slider/slider-8.jpg' %}" alt="banner">
                     </a>
                 </div>
             </div>
@@ -294,18 +239,13 @@
             </div>
                 {% for product in best_sellers_products %}
                     <div class="col-lg-4">
-                        <div class="product-card product-card-horizontal border-bottom">
+                        <div class="product-card product-card-horizontal border-bottom" style="height: 200px;">
                             <div class="product-card-top">
                                 <a href="{{ product.get_absolute_url }}" class="product-image">
                                     <img src="{{ product.images.first.image.url }}" alt="product image">
                                 </a>
                             </div>
                             <div class="product-card-middle">
-                                <div class="ratings-container">
-                                    <div class="ratings">
-                                        <div class="ratings-val" style="width: 65%;"></div>
-                                    </div>
-                                </div>
                                 
                                 <h6 class="product-name">
                                     <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>
@@ -317,11 +257,11 @@
                             <div class="product-card-bottom">
                                 <div class="product-price">
                                     {% if product.discount != 0 and product.check_discount_time %}
-                                        <del class="text-danger p-4" >{{ product.price|intcomma }} تومان</del>
+                                        <del class="text-danger px-3" >{{ product.price|intcomma }} تومان</del>
                                     {% else %}
-                                        <del class="text-danger p-4" ></del>
+                                        <del class="text-danger px-3" ></del>
                                     {% endif %}
-                                    <p class="px-4">{{ product.get_price_after_discount|intcomma }} تومان </p>
+                                    <p class="px-3">{{ product.get_price_after_discount|intcomma }} تومان </p>
                                 </div>
 
                                 <a href="{% url 'cart:item_add' product.id %}?next={{request.path}}">

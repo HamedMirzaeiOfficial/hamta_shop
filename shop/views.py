@@ -86,22 +86,30 @@ class ProductComment(SingleObjectMixin, FormView):
         return reverse('shop:product_detail', kwargs={'id': self.object.id,
                                                       'slug': self.object.slug})
 
-
-
 class SearchList(ListView):
-	paginate_by = 200
-	template_name = 'shop/search_list.html'
+    paginate_by = 10
+    template_name = 'shop/search_list.html'
 
-	def get_queryset(self):
-		search = self.request.GET.get('q')
-		return Product.objects_available.filter(Q(descriptions__detail__icontains=search) | Q(title__icontains=search) | Q(technical_descriptions__detail__icontains=search))
+    def get_queryset(self):
+        search = self.request.GET.get('q')
+        queryset = Product.objects_available.all()
 
-	def get_context_data(self, **kwargs):
-		context = super().get_context_data(**kwargs)
-		context['search'] = self.request.GET.get('q')
-		return context
+        if search:
+            queryset = queryset.filter(
+                Q(descriptions__detail__icontains=search) |
+                Q(title__icontains=search) |
+                Q(technical_descriptions__detail__icontains=search)
+            ).distinct()
+        else:
+            # If no search term is provided, return an empty queryset or modify as needed
+            queryset = Product.objects_available.none()
 
+        return queryset
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['search'] = self.request.GET.get('q')
+        return context
 
 class ProductListByCategory(View):
     def get(self, request, *args, **kwargs):

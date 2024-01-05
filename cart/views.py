@@ -10,8 +10,14 @@ def item_add(request, id):
     product = Product.objects.get(id=id)
     product.get_discount()
     cart.add(product=product)
+    params = request.GET.copy()
+    search_value = request.GET.get('q', None)
+    if search_value:
+        params['q'] = search_value
+    
+    referrer_url = request.META.get('HTTP_REFERER', '/')  # Get the referrer URL, default to '/' if not found
     if request.GET.get('next') is None:
-        return redirect('shop:home')
+        return redirect(referrer_url)
     return redirect(request.GET.get('next'))
 
 
@@ -28,23 +34,32 @@ def item_increment(request, id):
     cart = Cart(request)
     product = Product.objects.get(id=id)
     cart.add(product=product)
-    return redirect(product.get_absolute_url())
 
-
+    referrer_url = request.META.get('HTTP_REFERER', '/')  # Get the referrer URL, default to '/' if not found
+    if request.GET.get('next') is None:
+        return redirect(referrer_url)
+    return redirect(request.GET.get('next'))
+   
+   
 @login_required
 def item_decrement(request, id):
     cart = Cart(request)
     product = Product.objects.get(id=id)
     cart.decrement(product=product)
-    return redirect(product.get_absolute_url())
-
-
+    referrer_url = request.META.get('HTTP_REFERER', '/')  # Get the referrer URL, default to '/' if not found
+    if request.GET.get('next') is None:
+        return redirect(referrer_url)
+    return redirect(request.GET.get('next'))
+   
 @login_required
 def cart_clear(request):
     cart = Cart(request)
     cart.clear()
-    return redirect("cart:cart_detail")
-
+    referrer_url = request.META.get('HTTP_REFERER', '/')  # Get the referrer URL, default to '/' if not found
+    if request.GET.get('next') is None:
+        return redirect(referrer_url)
+    return redirect(request.GET.get('next'))
+   
 
 def cart_detail(request):
     cart = Cart(request)

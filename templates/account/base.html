@@ -25,16 +25,7 @@
                                 </div>
                             </div>
                             <div class="user-options">
-                                <ul>
-                                    <li>
-                                        <a href="#">
-                                            <span>کیف پول</span>
-                                            <span>{{ user.wallet_amount|intcomma }} <span
-                                                    class="text-info font-weight-bold">تومان</span></span>
-                                        </a>
-                                    </li>
-                                   
-                                </ul>
+                             
                             </div>
                             <div class="user-menu">
                                 <ul>
@@ -60,7 +51,7 @@
                                     <li>
                                         <a href="{% url 'account:profile_address' %}">
                                             <i class="far fa-map-marked"></i>
-                                            نشانی ها
+                                            نشانی 
                                         </a>
                                     </li>
                                 
@@ -83,36 +74,6 @@
                 </div>
                 {% block main %}
                 {% endblock %}
-            </div>
-            <div class="row mb-5">
-                <div class="col-lg-3 col-md-6 col-sm-6 mb-lg-0 mb-3">
-                    <div class="banner">
-                        <a href="#">
-                            <img src="{% static './images/banner/banner-sm-01.jpg' %}" alt="banner">
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 mb-lg-0 mb-3">
-                    <div class="banner">
-                        <a href="#">
-                            <img src="{% static './images/banner/banner-sm-02.jpg' %}" alt="banner">
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 mb-lg-0 mb-3">
-                    <div class="banner">
-                        <a href="#">
-                            <img src="{% static './images/banner/banner-sm-03.jpg' %}" alt="banner">
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 mb-lg-0 mb-3">
-                    <div class="banner">
-                        <a href="#">
-                            <img src="{% static './images/banner/banner-sm-04.jpg' %}" alt="banner">
-                        </a>
-                    </div>
-                </div>
             </div>
         </div>
     </main>

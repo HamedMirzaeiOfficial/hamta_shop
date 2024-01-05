@@ -10,7 +10,6 @@
         buttons
         card
         form
-        rating
         modal
         navs
         select2
@@ -1180,37 +1179,6 @@ hr {
   background-color: #fff;
 }
 
-.add-rating {
-  direction: rtl;
-}
-
-.add-rating input {
-  display: none;
-}
-
-.add-rating input:checked ~ label::before,
-.add-rating input:checked ~ label ~ label::before {
-  color: #ffeb3b;
-}
-
-.add-rating input:not(:checked) ~ label:hover,
-.add-rating input:not(:checked) ~ label:hover ~ label::before {
-  color: #ffeb3b;
-}
-
-.add-rating label {
-  margin-bottom: 0;
-}
-
-.add-rating label:before {
-  content: "\f005";
-  font-family: "Font Awesome 5 Duotone";
-  font-size: 26px;
-  color: #979797;
-  cursor: pointer;
-  -webkit-transition: .3s;
-  transition: .3s;
-}
 
 .input-radio-color {
   display: block;
@@ -1326,56 +1294,8 @@ hr {
           box-shadow: inset 0 0 0 2px #ccc;
 }
 
-/*------------------------------------
-    Rating
-------------------------------------*/
-.ratings-container {
-  direction: ltr;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  font-size: 14px;
-  margin-bottom: 15px;
-  line-height: 1;
-  white-space: nowrap;
-}
 
-.ratings-container .ratings,
-.ratings-container .ratings-val {
-  display: inline-block;
-  font-size: 13px;
-  letter-spacing: 0.1em;
-  line-height: 1;
-  font-family: "Ionicons";
-}
 
-.ratings-container .ratings {
-  position: relative;
-  color: #ccc;
-}
-
-.ratings-container .ratings:before {
-  content: "☆" "☆" "☆" "☆" "☆";
-}
-
-.ratings-container .ratings-val {
-  position: absolute;
-  top: 0;
-  left: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  color: #fcb941;
-}
-
-.ratings-container .ratings-val:before {
-  content: "★" "★" "★" "★" "★";
-}
 
 /*------------------------------------
     Modal

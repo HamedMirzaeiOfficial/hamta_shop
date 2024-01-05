@@ -61,7 +61,7 @@
                                     </div>
                                     <div class="blog-card-body">
                                         <p>
-                                            {{ post.body|striptags|safe|linebreaks }}
+                                            {{ post.body|safe }}
                                         </p>
                                     </div>
                                 </div>
@@ -106,7 +106,7 @@
                                                     </div>
                                                     <div class="pr-2 flex-grow-1">
                                                         <div class="blockquote-footer">
-                                                            <span class="d-block font-weight-bold text-dark">{{ comment.user.get_full_name }}</span>
+                                                            <span class="d-block text-dark">{{ comment.user.get_full_name }}</span>
                                                             <div
                                                                 class="d-flex justify-content-between align-items-center">
                                                                 <cite class="text-sm">{{ comment.jcreated }}</cite>

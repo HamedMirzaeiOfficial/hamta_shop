@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     'widget_tweaks', 
     'crispy_forms',
     'taggit',
+    "ckeditor",
+    "ckeditor_uploader",
 
 ]
 
@@ -89,15 +91,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
 if DEBUG:
     DATABASES = {
@@ -139,7 +132,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-usa'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tehran'
 
 USE_I18N = True
 
@@ -222,12 +215,6 @@ ZARINPAL = {
     'merchant_id': MERCHANT_ID
 }
 
-# AUTHENTICATION_BACKENDS = [
-#     'django.contrib.auth.backends.ModelBackend', 
-#     'account.authentication.MobileBackend'
-# ]
-
-    
 
 EMAIL_USE_TLS = True 
 EMAIL_HOST = 'smtp.gmail.com'  
@@ -239,3 +226,13 @@ EMAIL_PORT = 587
 
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10242880 
+
+
+
+# ckeditor
+CKEDITOR_UPLOAD_PATH = "ckeditor/uploads/"
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+    },
+}
