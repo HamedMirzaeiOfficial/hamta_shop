@@ -57,7 +57,7 @@
                                                         </p>
                                                     {% endif %}
                                                 </div>
-                                                <a href="{% url 'cart:item_add' product.id %}">
+                                                <a href="{% url 'cart:item_add' product.id %}?next={{request.path}}">
                                                     <i class="fad fa-cart-plus"></i>
                                                     افزودن به سبد خرید
                                                 </a>

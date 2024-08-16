@@ -1,6 +1,5 @@
 from django.db import models
 from django.urls import reverse
-from tinymce.models import HTMLField 
 from decimal import Decimal
 from django.utils import timezone
 from account.models import User
@@ -140,7 +139,7 @@ class Property(models.Model):
 class Description(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='descriptions', verbose_name="محصول مربوطه")
     title = models.CharField(max_length=100, verbose_name="عنوان")
-    detail = HTMLField(verbose_name="جزئیات")
+    detail = models.TextField(verbose_name="جزئیات")
 
     class Meta:
         verbose_name = "توضیحات"

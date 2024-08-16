@@ -224,7 +224,7 @@
                                             <p>{{ product.price_after_discount|intcomma }} تومان</p>
                                         </div>
                                     {% endif %}
-                                    <a href="{% url 'cart:item_add' product.id %}" class="">
+                                    <a href="{% url 'cart:item_add' product.id %}?next={{request.path}}" class="">
                                         <i class="fad fa-cart-plus"></i>
                                         افزودن به سبد خرید
                                     </a>
@@ -322,10 +322,12 @@
                                     {% endif %}
                                     <p class="px-4">{{ product.get_price_after_discount|intcomma }} تومان </p>
                                 </div>
-                                
-                                <a href="{% url 'cart:item_add' product.id %}" class="">
-                                    <i class="fad fa-cart-plus"></i>
-                                    افزودن به سبد خرید
+
+                                <a href="{% url 'cart:item_add' product.id %}?next={{request.path}}">
+                                    <button onclick="" class="add-to-cart">
+                                        <i class="fad fa-cart-plus"></i>
+                                        افزودن به سبد خرید
+                                    </button>
                                 </a>
                             </div>
                         </div>

@@ -13,18 +13,19 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
-from .tokens import account_activation_token
 from order.models import Address, Order
 from shop.models import Comment
 from django.contrib.auth.decorators import login_required
-import random
 from extensions.utils import send_otp_code
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
-
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import authenticate, login as auth_login
+from .authentication import MobileBackend
+import random
+
 
 
 
@@ -132,23 +133,51 @@ def comment_delete(request, pk):
 
 
 def login(request):
-    form = None
-    message = ''
+    form = LoginForm()
     if request.method == 'POST':
-        form = forms.LoginForm(request.POST)
+        form = LoginForm(request.POST)
         if form.is_valid():
-            user = authenticate(
-                username=form.cleaned_data['phone_number'],
-                password=form.cleaned_data['password'],
-            )
-            if user is not None:
-                login(request, user)
-                message = 'شما با موفقیت وارد شدید'
-                return redirect(reverse_lazy('account:profile'))
-            else:
-                message = 'ورود انجام نشد'
-    return render(
-        request, 'registration/login.html', context={'form': form, 'message': message})
+            random_code = random.randint(1000, 9999)
+            send_otp_code(form.cleaned_data['phone_number'], random_code)
+            OtpCode.objects.create(phone_number=form.cleaned_data['phone_number'], code=random_code)
+            request.session['user_login_info'] = {'phone_number': form.cleaned_data['phone_number']}
+            messages.success(request, 'کد فعالسازی حساب کاربری برای شماره تلفن شما فرستاده شد.', 'success')
+            return redirect('verify_login_code')
+
+    return render(request, 'registration/login.html', {'form': form})
+
+
+
+class UserLoginVerify(View):
+    form_class = VerifyCodeForm
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class
+        return render(request, 'registration/verify.html', {'form': form})
+
+
+    def post(self, request, *args, **kwargs):
+        user_session = request.session['user_login_info']
+        print(user_session)
+        code_instance = OtpCode.objects.filter(phone_number=user_session['phone_number']).last()
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            cd = form.cleaned_data
+            if cd['code'] == code_instance.code:
+                backend = MobileBackend()
+                user = backend.authenticate(request, phone_number=user_session['phone_number'])
+                if user is not None:
+                    auth_login(request, user, backend='account.authentication.MobileBackend')
+                    
+                    messages.success(request, 'شما با موفقیت وارد شدید', 'success')
+                    return redirect(reverse_lazy('account:profile'))
+                else:
+                    messages.error(request, 'ورود انجام نشد', 'danger')
+                    return redirect('verify_login_code')
+        
+        return redirect('shop:home')
+
 
 class PasswordChange(PasswordChangeView):
     success_url = reverse_lazy('account:password_change_done')
@@ -173,15 +202,12 @@ class UserRegisterView(View):
             send_otp_code(form.cleaned_data['phone_number'], random_code)
             OtpCode.objects.create(phone_number=form.cleaned_data['phone_number'], code=random_code)
             request.session['user_registration_info'] = {'first_name': form.cleaned_data['first_name'], 
-                        'last_name': form.cleaned_data['last_name'], 'phone_number': form.cleaned_data['phone_number'], 
-                        'password': form.cleaned_data['password1'], }
+                        'last_name': form.cleaned_data['last_name'], 'phone_number': form.cleaned_data['phone_number']}
 
             messages.success(request, 'کد فعالسازی حساب کاربری برای شماره تلفن شما فرستاده شد.', 'success')
             return redirect('verify_code')
 
         return render(request, self.template_name, {'form': form})
-
-
 
 
 
@@ -200,12 +226,13 @@ class UserRegisterVerify(View):
         if form.is_valid():
             cd = form.cleaned_data
             if cd['code'] == code_instance.code:
-                user = User.objects.create_user(first_name=user_session['first_name'], last_name=user_session['last_name'], phone_number=user_session['phone_number'], password=user_session['password'])
+                user = User.objects.create_user(first_name=user_session['first_name'], last_name=user_session['last_name'], phone_number=user_session['phone_number'])
                 user.is_active = True
                 user.save()
                 code_instance.delete()
+                auth_login(request, user, backend='account.authentication.MobileBackend')
                 messages.success(request, 'ثبت نام شما با موفقیت انجام شد.', 'success')
-                return redirect('login')
+                return redirect('account:profile')
 
             else:
                 messages.error(request, 'کد وارد شده اشتباه است.', 'danger')

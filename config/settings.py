@@ -15,19 +15,18 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+DB_ENGINE = os.getenv("DB_ENGINE")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ''
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(",")
 
 # Application definition
 
@@ -89,17 +88,27 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
-DATABASES = {
-	'default': {
-		'ENGINE': 'django.db.backends.mysql',
-		'NAME': 'mydb',
-		'USER': 'root',
-		'PASSWORD': 'admin',
-		'HOST':'localhost',
-		'PORT':'3306',
-	}
-}
+# Database
+# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+if DB_ENGINE == 'sqlite3':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql_psycopg2",
+            "NAME": os.getenv("DB_NAME"),
+            "USER": os.getenv("DB_USER"),
+            "PASSWORD": os.getenv("DB_PASSWORD"),
+            "HOST": os.getenv("DB_HOST"),
+            "PORT": os.getenv("DB_PORT"),
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -159,34 +168,35 @@ CART_SESSION_ID = 'cart'
 CRISPY_TEMPLATE_PACK = 'bootstrap4' 
 
 
-
 TINYMCE_DEFAULT_CONFIG = {
-    'cleanup_on_startup': False,
-    'custom_undo_redo_levels': 20,
-    'selector': 'textarea',
-    'theme': 'silver',
-    'plugins': '''
-            textcolor save link image media preview codesample contextmenu
-            table code lists fullscreen  insertdatetime  nonbreaking
-            contextmenu directionality searchreplace wordcount visualblocks
-            visualchars code fullscreen autolink lists  charmap print  hr
-            anchor pagebreak
-            ''',
-    'toolbar1': '''
-            fullscreen preview bold italic underline | fontselect,
-            fontsizeselect  | forecolor backcolor | alignleft alignright |
-            aligncenter alignjustify | indent outdent | bullist numlist table |
-            | link image media | codesample |
-            ''',
-    'toolbar2': '''
-            visualblocks visualchars |
-            charmap hr pagebreak nonbreaking anchor |  code |
-            ''',
-    'contextmenu': 'formats | link image',
-    'menubar': True,
-    'statusbar': True,
-}
 
+   'height': 360,
+   'width': 750,
+   'cleanup_on_startup': True,
+   'custom_undo_redo_levels': 20,
+   'selector': 'textarea',
+   'theme': 'advanced',
+   'plugins': '''
+   textcolor save link image media preview codesample contextmenu
+   table code lists fullscreen insertdatetime nonbreaking
+   contextmenu directionality searchreplace wordcount visualblocks
+   visualchars code fullscreen autolink lists charmap print hr
+   anchor pagebreak
+   ''',
+   'toolbar1': '''
+   fullscreen preview bold italic underline | fontselect,
+   fontsizeselect | forecolor backcolor | alignleft alignright |
+   aligncenter alignjustify | indent outdent | bullist numlist table |
+   | link image media | codesample |
+   ''',
+   'toolbar2': '''
+   visualblocks visualchars |
+   charmap hr pagebreak nonbreaking anchor | code |
+   ''',
+   'contextmenu': 'formats | link image',
+   'menubar': True,
+   'statusbar': True,
+}
 
 
 LOGIN_REDIRECT_URL = 'account:profile'
@@ -199,11 +209,17 @@ AUTH_USER_MODEL = 'account.User'
 
 
 
-MERCHANT_ID = ''
+MERCHANT_ID = '6f1c037a-537d-4f15-86b6-87a1001f0483'
 
 ZARINPAL = {
     'gateway_request_url': 'https://www.zarinpal.com/pg/services/WebGate/wsdl',
     'gateway_callback_url': 'http://127.0.0.1:2003/payment/verify',
     'merchant_id': MERCHANT_ID
 }
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend', 
+    'account.authentication.MobileBackend'
+]
+
 

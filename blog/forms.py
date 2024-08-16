@@ -1,5 +1,6 @@
 from django import forms
-from .models import Comment
+from .models import Comment, Post
+from tinymce.widgets import TinyMCE
 
 
 class CommentForm(forms.ModelForm):
@@ -15,3 +16,11 @@ class CommentForm(forms.ModelForm):
 
 class SearchForm(forms.Form):
     query = forms.CharField()
+
+
+class FlatPageForm(forms.ModelForm):
+
+    class Meta:
+        model = Post
+        fields = ('title', 'body', 'publish', 'slug')
+        widgets = {'body': TinyMCE()}

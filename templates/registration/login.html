@@ -1,15 +1,12 @@
 {% extends './base.html' %}
 {% load static %}
 {% load widget_tweaks %}
+{% load crispy_forms_tags %}
 
-{% block title %} {% endblock %}
+{% block title %}ورود به همتا {% endblock %}
 
 {% block content %}
-    {% if form.errors %}
-        <div class="alert alert-danger">
-            {{ form.errors }}
-        </div>
-    {% endif %}
+    
     <main class="page-content">
         <div class="container">
             <div class="auth-wrapper">
@@ -24,19 +21,20 @@
                     </div>
                     <form method="post">
                         {% csrf_token %}
-                        <div class="form-element-row">
+                        {{ form|crispy }}
+                        <!-- <div class="form-element-row">
                             <label for="phone-number" class="label-element">شماره موبایل</label>
                             <div class="form-element-with-icon">
                                 {{form.username|add_class:"input-element"}}                           
 
                                 {% if form.username.errors %}
-							        <div class="myerrors">
-								        {{form.username.errors}}
-							        </div>
-						        {% endif %}
+                                    <div class="myerrors">
+                                        {{form.username.errors}}
+                                    </div>
+                                {% endif %}
                             </div>
-                        </div>
-                        <div class="form-element-row">
+                        </div> -->
+                        <!-- <div class="form-element-row">
                             <label for="password" class="label-element">
                                 <span class="d-flex justify-content-between">
                                     <span>کلمه عبور</span>
@@ -47,7 +45,7 @@
                                 {{form.password|add_class:"input-element"}}
                                 
                             </div>
-                        </div>
+                        </div> -->
                         <div class="form-element-row">
                             <label class="container-checkbox">
                                 مرا به خاطر داشته باش

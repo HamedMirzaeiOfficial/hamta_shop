@@ -26,8 +26,94 @@
     <!-- colors: amber,blue,brown,cyan,default,green,indigo,orange,pink,purple,red,teal,yellow -->
     <link rel="stylesheet" href="{% static './css/colors/default.css' %}" id="colorswitch">
     
-    <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
-    <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
+    <link href="{% static 'tinymce/css/prism.css' %}" rel="stylesheet">
+
+    <style>
+        .product-card.product-card-horizontal .product-card-bottom .add-to-cart {
+            width: auto;
+            padding: 5px 10px;
+            position: relative;
+            bottom: 0;
+            opacity: 1;
+            visibility: visible;
+            -webkit-transform: scale(1);
+            transform: scale(1);
+            }
+        .product-card .product-card-bottom .add-to-cart {
+            background: #007bff;
+            }
+        .product-card .product-card-bottom .add-to-cart {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            font-size: 13px;
+            position: absolute;
+            left: 0;
+            bottom: 20px;
+            width: 100%;
+            line-height: 25px;
+            padding: 6px 0 4px;
+            color: #fff;
+            background: #007bff;
+            border-radius: 7px;
+            -webkit-box-shadow: 0 0.5rem 1.125rem -0.5rem #979797;
+            box-shadow: 0 0.5rem 1.125rem -0.5rem #979797;
+            text-align: center;
+            opacity: 0;
+            visibility: hidden;
+            -webkit-transform: scale(0.9);
+            transform: scale(0.9);
+            -webkit-transition: .2s ease-in-out;
+            transition: .2s ease-in-out;
+            }
+        a, a:hover {
+                text-decoration: none;
+                -webkit-transition: all .2s ease;
+                transition: all .2s ease;
+            }
+        a {
+                color: #007bff;
+                text-decoration: none;
+                background-color: transparent;
+            }
+        *, ::after, ::before {
+                box-sizing: border-box;
+            }
+user agent stylesheet
+        a:-webkit-any-link {
+                color: -webkit-link;
+                cursor: pointer;
+                text-decoration: underline;
+            }
+        .page-wrapper {
+                direction: rtl;
+            }
+
+            #titlecheki {
+    font-weight: bold;
+    font-size: xx-large;
+    margin: 0 0 10px 0;
+}
+#titlepcheki {
+    margin: 0 0 30px 0;
+}
+#box-chek{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.upload-chek {
+    margin: 10px 0 0 0;
+}
+
+
+    </style>
 </head>
 
 <body>
@@ -116,11 +202,7 @@
                                                         </span>
                                                     </span>
                                                     <span class="price">{{ product.get_price_after_discount|intcomma }} تومان</span>
-                                                    <a href="{% url 'cart:item_clear' product.id %}">
-                                                        <button class="remove-item">
-                                                            <i class="far fa-trash-alt"></i>
-                                                        </button>
-                                                    </a>
+                                                    
                                                 </li>
                                             {% endwith %}
                                         {% endfor %}
@@ -316,9 +398,7 @@
                                                         </span>
                                                     </span>
                                                     <span class="price">{{ product.get_price_after_discount|intcomma }} تومان</span>
-                                                    <a href="{% url 'cart:item_clear' product.pk %}" class="remove-item">
-                                                        <i class="far fa-trash-alt"></i>
-                                                    </a>
+                                                    
                                                 </li>
                                             {% endwith %}
                                         {% endfor %}
@@ -400,17 +480,7 @@
         </div>
         <!-- end color switcher -->
 
-        <!-- Page Loader -->
-        <div class="page-loader">
-            <div class="page-loader-content">
-                <div class="logo-area">
-                    <img src="{% static './images/logo.png' %}" alt="">
-                </div>
-                <span class="loader"></span>
-            </div>
-        </div>
-        <!-- end Page Loader -->
-
+        
         <footer class="main-footer">
             <div class="back-to-top">
                 <div class="back-btn">
@@ -578,6 +648,8 @@
 
 
     <!-- JS Global Compulsory -->
+    <script src="{% static 'tinymce/js/prism.js' %}"></script>
+
     <script src="{% static './js/jquery-3.5.1.min.js' %}"></script>
     <script src="{% static './js/plugins/popper.min.js' %}"></script>
     <script src="{% static './bootstrap/js/bootstrap.min.js' %}"></script>
@@ -600,15 +672,14 @@
     <!-- Here goes your custom.js -->
     <script src="{% static './js/custom.js' %}"></script>
     
-    <!-- var time = {{ min_time }}
     <script>
         $(document).ready(function () {
             $('#countdown--offer-slider').ClassyCountdown({
                 theme: "black",
-                end: $.now() + time,
+                end: $.now() + 645600,
                 labels: false,
             });
-        }); -->
+        }); 
     </script>
 </body>
 

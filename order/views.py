@@ -117,4 +117,9 @@ def check_payment_form(request):
 
 
 
+@login_required
+def admin_order_detail(request, pk):
+    order = get_object_or_404(Order, pk=pk)
+    return render(request, 'order/admin_order_detail.html', {'order': order})
+
 

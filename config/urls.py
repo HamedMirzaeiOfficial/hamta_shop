@@ -17,18 +17,19 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
-from account.views import login, UserRegisterView, UserRegisterVerify
+from account.views import login, UserRegisterView, UserRegisterVerify, UserLoginVerify
 
 
 
 urlpatterns = [
     path('admin/clearcache/', include('clearcache.urls')),
-    path('', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
     path('login/', login, name='login'),
+    path('verify_login/', UserLoginVerify.as_view(), name='verify_login_code'),
     path('register/', UserRegisterView.as_view(), name='register'),
     path('verify/', UserRegisterVerify.as_view(), name='verify_code'),
-    path('tinymce/', include('tinymce.urls')),
+    path('', include('django.contrib.auth.urls')),
+    path('tinymce/',include('tinymce.urls')), 
     path('', include('shop.urls', namespace='home')),
     path('cart/', include('cart.urls', namespace='cart')),  
     path('blog/', include('blog.urls', namespace='blog')),

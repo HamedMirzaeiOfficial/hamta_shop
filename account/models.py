@@ -3,10 +3,12 @@ from django.contrib.auth.models import PermissionsMixin, AbstractBaseUser
 from .managers import MyUserManager
 from django.db import models
 
+
+
 class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=100, null=True, blank=True, unique=True, verbose_name='نام کاربری')
-    first_name = models.CharField(max_length=150, blank=True, verbose_name='نام')
-    last_name = models.CharField(max_length=150, blank=True, verbose_name='نام خانوادگی')
+    first_name = models.CharField(max_length=150, blank=True, null=True, verbose_name='نام')
+    last_name = models.CharField(max_length=150, blank=True, null=True, verbose_name='نام خانوادگی')
     email = models.EmailField(max_length=255, verbose_name='ایمیل', blank=True, null=True)
     ssn = models.BigIntegerField(unique=True, verbose_name='کد ملی', blank=True, null=True)
     phone_number = models.CharField(max_length=11, verbose_name='شماره تلفن', blank=True, null=True, unique=True)
@@ -44,7 +46,15 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.is_admin
 
     def get_full_name(self):
-        return self.first_name + " " + self.last_name
+        text = str()
+        if self.first_name:
+            text += self.first_name
+        if self.last_name:
+            text += " " + self.last_name
+
+        return text
+
+
 
 class OtpCode(models.Model):
     phone_number = models.CharField(max_length=11)

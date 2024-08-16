@@ -5,23 +5,19 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 from .models import User, OtpCode
-from .forms import UserChangeForm, UserCreationForm
+from .forms import UserChangeForm
 
 admin.site.register(OtpCode)
 
 class UserAdmin(BaseUserAdmin):
     form = UserChangeForm
-    add_form = UserCreationForm
-
-    list_display = ('first_name', 'last_name', 'email', 'phone_number', 'is_admin')
+    
+    list_display = ('phone_number', 'first_name', 'last_name', 'email', 'is_admin')
     list_filter = ('is_admin',)
     fieldsets = (
-        (None, {'fields': ('phone_number', 'password')}),
-        # ('Personal info', {'fields': ('date_of_birth',)}),
-        ('Permissions', {'fields': ('is_admin',)}),
+        (None, {'fields': ('phone_number', 'first_name', 'last_name', 'email', 'ssn', 'wallet_amount')}),
     )
-    # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
-    # overrides get_fieldsets to use this attribute when creating a user.
+
     add_fieldsets = (
         (None, {
             'classes': ('wide',),

@@ -44,7 +44,7 @@ class Order(models.Model):
     paid_time = models.DateTimeField(null=True, blank=True, verbose_name="زمان پرداخت")
     is_paid = models.BooleanField(default=False, verbose_name="پرداخت شده؟")
     code = models.UUIDField(default=uuid.uuid4, editable=False, max_length=15, verbose_name="کد")
-    shipping_status = models.CharField(choices=STATUS, max_length=20, default='Waiting Payment', verbose_name="وضعیت سفارش")
+    shipping_status = models.CharField(choices=STATUS, max_length=20, default='Waiting Payment', verbose_name="وضعیت")
     address = models.ForeignKey(Address, on_delete=models.CASCADE, related_name='orders', verbose_name="آدرس")
     payment_type = models.CharField(choices=PAYMENT_TYPE, default='Internet', max_length=100, verbose_name="نوع پرداخت")
     ref_id = models.IntegerField(blank=True, null=True, verbose_name="کد رهگیری پرداخت اینترنتی")
@@ -57,10 +57,15 @@ class Order(models.Model):
         verbose_name_plural = "سفارش ها"
 
     def __str__(self):
-        return f"{self.code}"
+        return f"{self.code} - {self.user.get_full_name()} - {self.get_shipping_status_display()}"
+
 
     def get_absolute_url(self):
         return reverse('account:profile_order_detail', kwargs={'pk': self.id})
+
+
+    def get_absolute_url_for_admin(self):
+        return reverse("order:admin_order_detail", kwargs={'pk': self.id})
 
 
     def get_total_cost(self):

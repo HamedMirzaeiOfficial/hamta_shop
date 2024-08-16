@@ -135,7 +135,7 @@
             })
         });
         $('.product-card .product-card-bottom .btn-add-to-cart').on('click', function (event) {
-            event.preventDefault();
+            // event.preventDefault();
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',

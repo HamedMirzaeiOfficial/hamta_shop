@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views import View
-from django.views.generic import ListView, DetailView, FormView, CreateView
-from .models import Product, Banner, Category, Comment, Contact
+from django.views.generic import ListView, DetailView, FormView, CreateView, View
+from .models import Product, Banner, Category, Comment, Contact, TechnicalDescription
 from django.db.models import Q
 from .forms import CommentForm, ContactForm
 from django.http import HttpResponseForbidden
@@ -16,13 +16,11 @@ class Home(View):
         last_products = Product.objects_available.all()[:20]
         best_sellers_products = Product.objects_available.order_by('-number_sold')[:9] 
         offer_products = Product.objects_available.filter(~Q(discount=0), discount_time__gte=timezone.now())[:10]
-        banners = Banner.objects.all()
         
         return render(request, 'shop/home.html', 
                 {'last_products': last_products, 
                 'best_sellers_products': best_sellers_products,
                 'offer_product': offer_products, 
-                'banners': banners,
         })
         
 
@@ -48,6 +46,7 @@ class ProductDisplay(DetailView):
         context = super().get_context_data(**kwargs)
         context['form'] = CommentForm()
         context['technical_descriptions'] = context['product'].technical_descriptions.filter(parent=None)
+        context['technical_descriptions'] = TechnicalDescription.objects.filter(product=context['product'], parent=None)
         context['similar_products'] = Product.objects.filter(category=context['product'].category)
         context['comments'] = Comment.accepted.filter(product=self.get_object())
         return context
@@ -131,6 +130,6 @@ class ContactView(CreateView):
     def get_success_url(self) -> str:
         success_message = 'پیام شما به دست ما رسید.'
         messages.success(self.request, success_message)
-        return reverse('shop:contact')
+        return reverse('shop:home')
         
    

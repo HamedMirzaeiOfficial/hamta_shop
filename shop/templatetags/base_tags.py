@@ -12,3 +12,8 @@ def category_navbar():
 		"categories": Category.objects.filter(parent=None)
 	}
 
+
+
+@register.filter
+def objects(t, product):
+    return t.objects.filter(product=product)

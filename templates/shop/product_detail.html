@@ -1,5 +1,6 @@
 {% extends '../base.html' %}
 {% load humanize %}
+{% load base_tags %}
 {% block title %} جزئیات محصول{% endblock %}
 
 {% block content %}
@@ -161,7 +162,7 @@
                             </div>
                         </div>
                         <div class="d-flex align-items-center">
-                            <a href="#" class="add-to-cart">
+                            <a href="{% url 'cart:item_add' product.id %}?next={{request.path}}" class="add-to-cart">
                                 افزودن به سبد خرید
                             </a>
                         </div>
@@ -204,26 +205,24 @@
                             aria-labelledby="productDescription-tab">
                             <div class="product-desc">
                                 <div class="accordion accordion-product" id="accordionDescription">
-                               
                                     {% for description in product.descriptions.all %}   
                                         <div class="card">
-                                            <div class="card-header" id="headingOne">
+                                            <div class="card-header" id="heading-{{ description.id }}">
                                                 <h5 class="mb-0">
                                                     <button class="btn" type="button" data-toggle="collapse"
-                                                        data-target="#collapseOne" aria-expanded="true"
-                                                        aria-controls="collapseOne">
+                                                        data-target="#collapse-{{ description.id }}" aria-expanded="true"
+                                                        aria-controls="collapse-{{ description.id }}">
                                                         {{ description.title }}
                                                     </button>
                                                 </h5>
                                             </div>
 
-                                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                            <div id="collapse-{{ description.id }}" class="collapse" aria-labelledby="heading-{{ description.id }}"
                                                 data-parent="#accordionDescription">
                                                 <div class="card-body">
                                                     <p>
                                                         {{  description.detail|striptags|safe }}
                                                     </p>
-                                                    <img src="./assets/images/single-product/01.jpg" alt="">
                                                 </div>
                                             </div>
                                         </div>
@@ -235,27 +234,21 @@
                         <div class="tab-pane fade" id="productParams" role="tabpanel"
                             aria-labelledby="productParams-tab">
                             <div class="product-params">
+                                <h3 class="params-title">مشخصات</h3>
                                 {% for t in technical_descriptions %}
                                     <section>
-                                        {% if not t.children.all %}
-                                            <h3 class="params-title">{{ t.title }}</h3>
-                                        {% else %}
-                                            <h3 class="params-title">{{ t.title }}</h3>
-                                            {% for obj in t.children.all %}
-                                                <ul class="params-list m-0" >
-                                                    <li>
-                                                        <div class="params-list-key">
-                                                            <span>{{ obj.title }}</span>
-                                                        </div>
-                                                        <div class="params-list-value">
-                                                            <span>
-                                                                {{ obj.detail }}
-                                                            </span>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            {% endfor %}
-                                        {% endif %}
+                                        <ul class="params-list m-0" >
+                                            <li>
+                                                <div class="params-list-key">
+                                                    <span>{{ t.title }}</span>
+                                                </div>
+                                                <div class="params-list-value">
+                                                    <span>
+                                                        {{ t.detail }}
+                                                    </span>
+                                                </div>
+                                            </li>
+                                        </ul>
                                     </section>
                                 {% endfor %} 
                             </div>

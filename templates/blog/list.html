@@ -61,7 +61,7 @@
                                         <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
                                     </div>
                                     <div class="blog-card-excerpt">
-                                        <p>{{ post.body|truncatewords:10 }}</p>
+                                        <p>{{ post.body|safe|striptags|truncatewords:10 }}</p>
                                     </div>
                                     <div class="blog-card-footer">
                                         <div class="author">

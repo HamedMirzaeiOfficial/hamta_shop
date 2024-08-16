@@ -61,13 +61,13 @@
                                     </div>
                                     <div class="blog-card-body">
                                         <p>
-                                            {{ post.body }}
+                                            {{ post.body|striptags|safe|linebreaks }}
                                         </p>
                                     </div>
                                 </div>
                                 <div class="tags mb-5">
                                     {% for tag in tags %}
-                                      <a href="{% url 'blog:post_list_by_tag' tag.slug % }">#{{ tag.name }}</a>
+                                      <a href="{% url 'blog:post_list_by_tag' tag.slug %}">#{{ tag.name }}  </a>
                                     {% endfor %}
                                 </div>
                                 <hr>
